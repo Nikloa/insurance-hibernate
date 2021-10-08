@@ -32,8 +32,8 @@ public class InsurerImplementation implements InsurerInterface {
     }
 
     @Override
-    public Insurer extractInsurer(int id) throws SQLException {
-        ResultSet resultSet = DatabasePool.getConnectionPool().getConnection().createStatement().executeQuery("select * from insurers where id = " + id);
+    public Insurer extractInsurer(String email) throws SQLException {
+        ResultSet resultSet = DatabasePool.getConnectionPool().getConnection().createStatement().executeQuery("select * from insurers where email like '" + email + "'");
         resultSet.next();
         Insurer insurer = new Insurer(resultSet.getInt(1),
                 resultSet.getString(2),

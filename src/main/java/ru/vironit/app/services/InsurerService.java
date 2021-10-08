@@ -20,8 +20,8 @@ public class InsurerService implements InsurerInterface {
     }
 
     @Override
-    public Insurer extractInsurer(int id) throws SQLException {
-        Insurer insurer = implementation.extractInsurer(id);
+    public Insurer extractInsurer(String email) throws SQLException {
+        Insurer insurer = implementation.extractInsurer(email);
         return insurer;
     }
 

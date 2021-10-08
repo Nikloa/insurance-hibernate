@@ -5,6 +5,7 @@ import ru.vironit.app.dao.interfaces.OfferInterface;
 import ru.vironit.app.entities.Offer;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class OfferService implements OfferInterface {
 
@@ -33,5 +34,10 @@ public class OfferService implements OfferInterface {
     @Override
     public void deleteOffer(int id) throws  SQLException {
         implementation.deleteOffer(id);
+    }
+
+    @Override
+    public ArrayList<Offer> listOffer() throws SQLException {
+        return implementation.listOffer();
     }
 }

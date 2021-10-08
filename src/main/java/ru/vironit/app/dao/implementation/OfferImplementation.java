@@ -5,6 +5,7 @@ import ru.vironit.app.dao.utils.DatabasePool;
 import ru.vironit.app.entities.Offer;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public class OfferImplementation implements OfferInterface {
 
@@ -62,5 +63,23 @@ public class OfferImplementation implements OfferInterface {
         preparedStatement.executeUpdate();
         preparedStatement.close();
         DatabasePool.getConnectionPool().releaseConnection(connection);
+    }
+
+    @Override
+    public ArrayList<Offer> listOffer() throws SQLException {
+        ArrayList<Offer> list = new ArrayList<>();
+        Connection connection = DatabasePool.getConnectionPool().getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement("select * from offers");
+        ResultSet resultSet = preparedStatement.executeQuery();
+        while(resultSet.next()) {
+            Offer offer = new Offer(resultSet.getInt(1),
+                    resultSet.getInt(2),
+                    resultSet.getString(3),
+                    resultSet.getDate(4),
+                    resultSet.getBigDecimal(5),
+                    resultSet.getInt(6));
+            list.add(offer);
+        }
+        return list;
     }
 }

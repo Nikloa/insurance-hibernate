@@ -7,6 +7,7 @@ public class User {
     private String nickname;
     private String email;
     private String password;
+    private Role role;
 
     public User() {
 
@@ -49,6 +50,14 @@ public class User {
 
     public String getPassword() {
         return password;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     @Override

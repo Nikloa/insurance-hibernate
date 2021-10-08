@@ -5,15 +5,15 @@ import java.util.Objects;
 public class Insurer extends User {
 
     private String companyName;
-    private  int phone;
+    private  int phone = 0;
     private Double rating = 0.0;
 
     public Insurer() {
-        super();
     }
 
     public Insurer (int id, String nickname, String email, String password, String companyName, int phone, Double rating) {
         super(id, nickname, email, password);
+        super.setRole(Role.INSURER);
         this.companyName = companyName;
         this.phone = phone;
         this.rating = rating;

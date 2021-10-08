@@ -7,7 +7,9 @@ import java.sql.SQLException;
 public interface ClientInterface {
 
     void addClient(Client client) throws SQLException;
-    Client extractClient(int id) throws SQLException;
+    Client extractClient(String nickname) throws SQLException;
     void updateClient(Client newClient, int oldId) throws SQLException;
     void deleteClient(int id) throws SQLException;
+    boolean checkClient(String email) throws SQLException;
+    boolean loginClient(String email, String password) throws SQLException;
 }

@@ -21,10 +21,10 @@ public class AdminImplementation implements AdminInterface {
     }
 
     @Override
-    public Admin extractAdmin(int id) throws SQLException {
+    public Admin extractAdmin(String email) throws SQLException {
         Connection connection = DatabasePool.getConnectionPool().getConnection();
         Statement statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery("select * from admins where id = " + id);
+        ResultSet resultSet = statement.executeQuery("select * from admins where email like'" + email + "'");
         resultSet.next();
         Admin admin = new Admin(resultSet.getInt(1),
                 resultSet.getString(2),

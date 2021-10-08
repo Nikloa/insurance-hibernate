@@ -24,6 +24,7 @@ public class Client extends User{
 
     public Client(int id, String nickname, String email, String password, int phone, BigDecimal balance, Double rating) {
         super(id, nickname, email, password);
+        super.setRole(Role.CLIENT);
         this.phone = phone;
         this.balance = balance;
         this.rating = rating;

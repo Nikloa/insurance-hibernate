@@ -31,21 +31,25 @@ public class ClientImplementation implements ClientInterface {
     }
 
     @Override
-    public Client extractClient(int id) throws SQLException {
+    public Client extractClient(String email) throws SQLException {
         Connection connection = DatabasePool.getConnectionPool().getConnection();
         Statement statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery("select * from clients where id = " + id);
-        resultSet.next();
-        Client client = new Client(resultSet.getInt(1),
-                resultSet.getString(2),
-                resultSet.getString(3),
-                resultSet.getString(4),
-                resultSet.getInt(5),
-                resultSet.getBigDecimal(7),
-                resultSet.getDouble(8));
-        statement.close();
-        DatabasePool.getConnectionPool().releaseConnection(connection);
-        return client;
+        ResultSet resultSet = statement.executeQuery("select * from clients where email like '" + email + "'");
+        if (resultSet.next()) {
+            Client client = new Client(resultSet.getInt(1),
+                    resultSet.getString(2),
+                    resultSet.getString(3),
+                    resultSet.getString(4),
+                    resultSet.getInt(5),
+                    resultSet.getBigDecimal(7),
+                    resultSet.getDouble(8));
+            statement.close();
+            DatabasePool.getConnectionPool().releaseConnection(connection);
+            return client;
+        } else {
+            System.out.println("Client not found");
+            return null;
+        }
     }
 
     @Override
@@ -77,5 +81,21 @@ public class ClientImplementation implements ClientInterface {
         preparedStatement.executeUpdate();
         preparedStatement.close();
         DatabasePool.getConnectionPool().releaseConnection(connection);
+    }
+
+    @Override
+    public boolean checkClient(String email) throws SQLException {
+        Connection connection = DatabasePool.getConnectionPool().getConnection();
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery("select * from clients where id = " + email);
+        return resultSet.next();
+    }
+
+    @Override
+    public boolean loginClient(String email, String password) throws SQLException {
+        Connection connection = DatabasePool.getConnectionPool().getConnection();
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery("select * from clients where email like '" + email + "' and password like '" + password + "'");
+        return resultSet.next();
     }
 }
