@@ -100,7 +100,7 @@
     }
 
     .bg {
-        background-image: url("../../../src/main/resources/images/register_bg.jpg");
+        background-image: url(https://cdn.pixabay.com/photo/2014/01/04/12/34/road-238458_960_720.jpg);
 
         height: 100%;
 

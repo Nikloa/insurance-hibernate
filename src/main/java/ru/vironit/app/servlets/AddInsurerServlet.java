@@ -1,5 +1,6 @@
 package ru.vironit.app.servlets;
 
+import ru.vironit.app.dao.filter.ServletUtils;
 import ru.vironit.app.entities.Insurer;
 import ru.vironit.app.services.InsurerService;
 
@@ -21,20 +22,27 @@ public class AddInsurerServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-            Insurer insurer = new Insurer();
-            insurer.setNickname(request.getParameter("nickname"));
-            insurer.setEmail(request.getParameter("email"));
-            insurer.setPassword(request.getParameter("password"));
-            //insurer.setPhone(Integer.parseInt(request.getParameter("phone")));
-            insurer.setCompanyName("companyName");
-            System.out.println(insurer.toString());
+        InsurerService insurerService = new InsurerService();
+        String email = request.getParameter("email");
 
-            try {
-                new InsurerService().addInsurer(insurer);
-            } catch (SQLException e) {
-                e.printStackTrace();
+        try {
+            if(!insurerService.checkInsurer(email)) {
+                Insurer insurer = new Insurer();
+                insurer.setNickname(request.getParameter("nickname"));
+                insurer.setEmail(email);
+                insurer.setPassword(request.getParameter("password"));
+                insurer.setPhone(insurerService.parsePhone(request.getParameter("phone")));
+                insurer.setCompanyName(request.getParameter("companyName"));
+                insurerService.addInsurer(insurer);
+                System.out.println(insurer.toString());
+                ServletUtils.storeUserCookie(response, request.getParameter("email"), "INSURER");
+                response.sendRedirect("history.back()");
+            } else {
+                request.setAttribute("error", email);
+                doGet(request, response);
             }
-
-        doGet(request, response);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

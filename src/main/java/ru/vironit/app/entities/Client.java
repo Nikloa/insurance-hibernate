@@ -5,7 +5,7 @@ import java.util.Objects;
 
 public class Client extends User{
     private int phone;
-    private BigDecimal balance;
+    private BigDecimal balance = new BigDecimal(0);
     private Double rating = 0.0;
 
     public Client() {

@@ -87,7 +87,7 @@ public class ClientImplementation implements ClientInterface {
     public boolean checkClient(String email) throws SQLException {
         Connection connection = DatabasePool.getConnectionPool().getConnection();
         Statement statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery("select * from clients where id = " + email);
+        ResultSet resultSet = statement.executeQuery("select * from clients where email like '" + email + "'");
         return resultSet.next();
     }
 
@@ -97,5 +97,22 @@ public class ClientImplementation implements ClientInterface {
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery("select * from clients where email like '" + email + "' and password like '" + password + "'");
         return resultSet.next();
+    }
+
+    @Override
+    public int parsePhone(String phone) {
+        String numb = "0123456789";
+        String phoneString = "";
+        if(phoneString != phone) {
+            for (int i = 4; i < phone.length(); i++) {
+                for (int j = 0; j < 10; j++) {
+                    if(phone.charAt(i) == numb.charAt(j)) {
+                        phoneString += numb.charAt(j);
+                    }
+                }
+            }
+            return Integer.parseInt(phoneString);
+        }
+        return 0;
     }
 }

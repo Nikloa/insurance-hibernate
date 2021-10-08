@@ -44,4 +44,9 @@ public class ClientService implements ClientInterface {
     public boolean loginClient(String email, String password) throws SQLException {
         return implementation.loginClient(email, password);
     }
+
+    @Override
+    public int parsePhone(String phone) {
+        return implementation.parsePhone(phone);
+    }
 }

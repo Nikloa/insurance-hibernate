@@ -11,13 +11,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Insurance</title>
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}https://www.w3schools.com/w3css/4/w3.css">
-    <link rel="stylesheet" type="text/css" href="css/indexStyle.css">
 </head>
 <body>
 
 <div class="bg">
     <form method="post" class="container">
-        <span class="closebtn" onclick="location.href='/'" title="Close Overlay">×</span>
+        <span class="closebtn" onclick="history.back()" title="Back">×</span>
         <h1>Login</h1>
 
         <label>Email:
@@ -103,7 +102,7 @@
     }
 
     .bg {
-        background-image: url("../register_bg.jpg");
+        background-image: url(https://cdn.pixabay.com/photo/2014/01/04/12/34/road-238458_960_720.jpg);
 
         height: 100%;
 

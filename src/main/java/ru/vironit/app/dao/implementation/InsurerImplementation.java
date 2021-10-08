@@ -4,17 +4,14 @@ import ru.vironit.app.dao.interfaces.InsurerInterface;
 import ru.vironit.app.dao.utils.DatabasePool;
 import ru.vironit.app.entities.Insurer;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class InsurerImplementation implements InsurerInterface {
 
     @Override
     public void addInsurer(Insurer insurer) throws SQLException {
         Connection connection = DatabasePool.getConnectionPool().getConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement("insert into clients (nickname, email, password, short_company_name, infomation_phone, rating) values (?, ?, ?, ?, ?, ?)");
+        PreparedStatement preparedStatement = connection.prepareStatement("insert into insurers (nickname, email, password, short_company_name, information_phone, rating) values (?, ?, ?, ?, ?, ?)");
         preparedStatement.setString(1, insurer.getNickname());
         preparedStatement.setString(2, insurer.getEmail());
         preparedStatement.setString(3, insurer.getPassword());
@@ -73,5 +70,38 @@ public class InsurerImplementation implements InsurerInterface {
         preparedStatement.executeUpdate();
         preparedStatement.close();
         DatabasePool.getConnectionPool().releaseConnection(connection);
+    }
+
+    @Override
+    public boolean checkInsurer(String email) throws SQLException {
+        Connection connection = DatabasePool.getConnectionPool().getConnection();
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery("select * from insurers where email like '" + email + "'");
+        return resultSet.next();
+    }
+
+    @Override
+    public boolean loginInsurer(String email, String password) throws SQLException {
+        Connection connection = DatabasePool.getConnectionPool().getConnection();
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery("select * from insurers where email like '" + email + "' and password like '" + password + "'");
+        return resultSet.next();
+    }
+
+    @Override
+    public int parsePhone(String phone) {
+        String numb = "0123456789";
+        String phoneString = "";
+        if(phoneString != phone) {
+            for (int i = 4; i < phone.length(); i++) {
+                for (int j = 0; j < 10; j++) {
+                    if(phone.charAt(i) == numb.charAt(j)) {
+                        phoneString += numb.charAt(j);
+                    }
+                }
+            }
+            return Integer.parseInt(phoneString);
+        }
+        return 0;
     }
 }

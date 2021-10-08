@@ -57,8 +57,17 @@
 <body>
 
 <div class="bg">
-
+    <%
+        if (request.getAttribute("error") != null) {
+            out.println("<div class=\"w3-panel w3-red w3-display-container w3-card-4 w3-round\">\n" +
+                    "   <span onclick=\"this.parentElement.style.display='none'\"\n" +
+                    "   class=\"w3-button w3-margin-right w3-display-right w3-round-large w3-hover-green w3-border w3-border-green w3-hover-border-grey\">×</span>\n" +
+                    "   <h5>Email '" + request.getAttribute("error") + "' already exist!</h5>\n" +
+                    "</div>");
+        }
+    %>
     <form method="post" class="container">
+        <span class="closebtn" onclick="history.back()" title="Back">×</span>
         <h1>Sing Up</h1>
 
         <label>Nickname:
@@ -70,14 +79,22 @@
         <label>Password:
             <input type="password" name="password" placeholder="Enter Password"><br />
         </label>
-        <label>
-            <input type="tel" name="phone"><br />
+        <label>Phone:
+            <input type="text" class="mask" name="phone" placeholder="+375 (12) 345-67-89">
         </label>
         <button type="submit" class="btn">Submit</button>
         <a href='/addInsurer'>I'm insurer</a>
     </form>
 </div>
-
+<script src="https://unpkg.com/imask"></script>
+<script>
+    var elements = document.getElementsByClassName('mask');
+    for (var i = 0; i < elements.length; i++) {
+        new IMask(elements[i], {
+            mask: '+{375} (00) 000-00-00',
+        });
+    }
+</script>
 </body>
 <style>
     body, html {
@@ -130,6 +147,19 @@
         opacity: 1;
     }
 
+    .closebtn {
+        position: absolute;
+        top: 0;
+        right: 5%;
+        font-size: 60px;
+        cursor: pointer;
+        color: #a1a1a1;
+    }
+
+    .closebtn:hover {
+        color: #7a7a7a;
+    }
+
     .checkmark {
         color: white;
         padding: 16px;
@@ -150,7 +180,7 @@
     }
 
     .bg {
-        background-image: url("../../../src/main/resources/images/register_bg.jpg");
+        background-image: url(https://catherineasquithgallery.com/uploads/posts/2021-02/1612569658_107-p-fon-zelenogo-sada-185.jpg);
 
         height: 100%;
 

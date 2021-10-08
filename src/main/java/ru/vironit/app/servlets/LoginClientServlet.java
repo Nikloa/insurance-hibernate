@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class LoginServlet extends HttpServlet {
+public class LoginClientServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

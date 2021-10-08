@@ -34,4 +34,19 @@ public class InsurerService implements InsurerInterface {
     public void deleteInsurer(int id) throws SQLException {
         implementation.deleteInsurer(id);
     }
+
+    @Override
+    public boolean checkInsurer(String email) throws SQLException {
+        return implementation.checkInsurer(email);
+    }
+
+    @Override
+    public boolean loginInsurer(String email, String password) throws SQLException {
+        return implementation.loginInsurer(email, password);
+    }
+
+    @Override
+    public int parsePhone(String phone) {
+        return implementation.parsePhone(phone);
+    }
 }
