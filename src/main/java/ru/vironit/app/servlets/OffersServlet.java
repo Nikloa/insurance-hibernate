@@ -22,7 +22,6 @@ public class OffersServlet extends HttpServlet {
         HttpSession session = request.getSession();
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("views/offers.jsp");
         requestDispatcher.forward(request, response);
-
     }
 
     @Override

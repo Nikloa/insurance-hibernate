@@ -14,7 +14,6 @@
 
 </head>
 <body>
-
 <div class="bg">
     <%
         if (request.getAttribute("error") != null) {

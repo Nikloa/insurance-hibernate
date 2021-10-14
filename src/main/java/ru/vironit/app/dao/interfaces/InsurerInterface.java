@@ -13,4 +13,5 @@ public interface InsurerInterface {
     Insurer checkInsurer(String email) throws SQLException;
     boolean loginInsurer(String email, String password) throws SQLException;
     int parsePhone(String phone);
+
 }

@@ -10,4 +10,5 @@ public interface LicenceInterface {
     Licence extractLicence(int id) throws SQLException;
     void updateLicence(Licence licence, int id) throws SQLException;
     void deleteLicence(int id) throws SQLException;
+
 }

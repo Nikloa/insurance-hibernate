@@ -24,7 +24,6 @@ public class ProfileInsurerServlet extends HttpServlet {
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("views/profileInsurer.jsp");
         requestDispatcher.forward(request, response);
         System.out.println("doPost missed");
-
     }
 
     @Override

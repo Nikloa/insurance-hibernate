@@ -23,6 +23,7 @@ public class ClientService implements ClientInterface {
     public Client extractClient(int id) throws SQLException {
         Client client = implementation.extractClient(id);
         return client;
+
     }
 
     @Override

@@ -232,6 +232,7 @@
         background-color: #3e8e41;
     }
 </style>
+
 <style>
     .grid-container {
         position: relative;

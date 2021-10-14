@@ -17,5 +17,6 @@ public class ListServlet extends HttpServlet {
         */
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("views/list.jsp");
         requestDispatcher.forward(request, response);
+
     }
 }

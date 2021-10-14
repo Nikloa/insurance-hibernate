@@ -13,4 +13,5 @@ public interface ClientInterface {
     Client checkClient(String email) throws SQLException;
     boolean loginClient(String email, String password) throws SQLException;
     int parsePhone(String phone);
+
 }

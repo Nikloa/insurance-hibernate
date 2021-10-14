@@ -17,6 +17,7 @@ public class LicenceService implements LicenceInterface {
     @Override
     public void addLicence(Licence licence) throws SQLException {
         implementation.addLicence(licence);
+
     }
 
     @Override

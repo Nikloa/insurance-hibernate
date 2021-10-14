@@ -16,7 +16,6 @@ public class Licence {
     private boolean confirmation;
 
     public Licence() {
-
     }
 
     public Licence(int id, int insurerId, String insurerName, String address, int taxpayerIdentificationNumber,

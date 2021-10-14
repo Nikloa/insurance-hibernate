@@ -33,7 +33,6 @@ public class CookieFilter implements Filter {
 
     @Override
     public void destroy() {
-
     }
 
     @Override

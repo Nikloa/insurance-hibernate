@@ -29,7 +29,6 @@ public class JDBCFilter implements Filter {
 
     @Override
     public void destroy() {
-
     }
 
     // Проверить является ли Servlet цель текущего request?

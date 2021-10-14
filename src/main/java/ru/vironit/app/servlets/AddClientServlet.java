@@ -27,6 +27,7 @@ public class AddClientServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ClientService clientService = new ClientService();
         String email = request.getParameter("email");
+
         try {
             if(clientService.checkClient(email) == null) {
                 Client client = new Client();

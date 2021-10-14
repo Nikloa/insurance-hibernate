@@ -10,4 +10,5 @@ public interface PassportInterface {
     Passport extractPassport(int id) throws SQLException;
     void updatePassport(Passport passport, int id) throws SQLException;
     void deletePassport(int id) throws SQLException;
+
 }

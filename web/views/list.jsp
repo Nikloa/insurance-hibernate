@@ -15,7 +15,6 @@
 <div class="w3-container w3-blue-grey w3-opacity w3-right-align">
     <h1>First Web App</h1>
 </div>
-
 <div class="w3-container w3-center w3-margin-bottom w3-padding">
     <div class="w3-card-4">
         <div class="w3-container w3-light-blue">

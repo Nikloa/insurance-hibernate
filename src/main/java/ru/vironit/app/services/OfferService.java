@@ -39,6 +39,7 @@ public class OfferService implements OfferInterface {
     @Override
     public ArrayList<Offer> listOffer() throws SQLException {
         return implementation.listOffer();
+
     }
 
     @Override

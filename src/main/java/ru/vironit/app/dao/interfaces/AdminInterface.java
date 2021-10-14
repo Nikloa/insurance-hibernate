@@ -11,4 +11,5 @@ public interface AdminInterface {
     void updateAdmin(Admin admin, int id) throws SQLException;
     void deleteAdmin(int id) throws SQLException;
     Admin checkAdmin(String email) throws SQLException;
+
 }

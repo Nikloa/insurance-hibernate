@@ -10,4 +10,5 @@ public interface ReviewInterface {
     Review extractReview(int id) throws SQLException;
     void updateReview(Review review, int id) throws SQLException;
     void deleteReview(int id) throws SQLException;
+
 }

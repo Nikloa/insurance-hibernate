@@ -18,6 +18,7 @@ public class AdminImplementation implements AdminInterface {
         preparedStatement.executeUpdate();
         preparedStatement.close();
         DatabasePool.getConnectionPool().releaseConnection(connection);
+
     }
 
     @Override

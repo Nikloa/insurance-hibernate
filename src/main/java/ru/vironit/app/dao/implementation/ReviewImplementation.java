@@ -21,6 +21,7 @@ public class ReviewImplementation implements ReviewInterface {
         DatabasePool.getConnectionPool().releaseConnection(connection);
     }
 
+
     @Override
     public Review extractReview(int id) throws SQLException {
         Connection connection = DatabasePool.getConnectionPool().getConnection();

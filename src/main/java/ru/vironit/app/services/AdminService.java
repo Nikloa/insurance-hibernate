@@ -23,6 +23,7 @@ public class AdminService implements AdminInterface {
     public Admin extractAdmin(int id) throws SQLException {
         Admin admin = implementation.extractAdmin(id);
         return admin;
+
     }
 
     @Override

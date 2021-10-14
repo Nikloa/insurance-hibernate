@@ -34,6 +34,7 @@ public class ContractService implements ContractInterface {
     @Override
     public void deleteContract(int id) throws  SQLException {
         implementation.deleteContract(id);
+
     }
 
     @Override

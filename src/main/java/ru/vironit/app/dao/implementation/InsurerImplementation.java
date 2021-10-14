@@ -22,6 +22,7 @@ public class InsurerImplementation implements InsurerInterface {
         preparedStatement.executeUpdate();
         preparedStatement.close();
         DatabasePool.getConnectionPool().releaseConnection(connection);
+
         /*
         DatabasePool.getConnectionPool().getConnection().createStatement().executeUpdate("insert into insurers (nickname, email, password, short_company_name, information_phone, raiting)" +
                 "values ('" + client.getNickname() + "', '" + client.getEmail() + "', '" + client.getPassword() + "', " +

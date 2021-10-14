@@ -19,6 +19,7 @@ public class InsuranceTypeImplementation implements InsuranceTypeInterface {
         preparedStatement.executeUpdate();
         preparedStatement.close();
         pool.releaseConnection(connection);
+
     }
 
     @Override

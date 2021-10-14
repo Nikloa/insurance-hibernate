@@ -18,6 +18,7 @@ public enum Role {
             }
         }
         return null;
+
     }
 
     public Role toRole(String string) {

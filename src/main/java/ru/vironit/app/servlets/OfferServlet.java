@@ -28,6 +28,7 @@ public class OfferServlet extends HttpServlet {
         System.out.println(request.getParameter("id"));
         requestDispatcher.forward(request, response);
         System.out.println("Post missed");
+
     }
 
     @Override

@@ -9,6 +9,7 @@ public class Client extends User{
     private Double rating = 0.0;
 
     public Client() {
+
     }
 /*
     public Client(int id, String nickname, String email, String password, int phone, BigDecimal balance, Double rating) {

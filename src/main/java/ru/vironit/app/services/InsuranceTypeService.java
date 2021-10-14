@@ -24,6 +24,7 @@ public class InsuranceTypeService implements InsuranceTypeInterface {
     public InsuranceType extractInsuranceType(int id) throws SQLException {
         InsuranceType insuranceType = implementation.extractInsuranceType(id);
         return insuranceType;
+
     }
 
     @Override

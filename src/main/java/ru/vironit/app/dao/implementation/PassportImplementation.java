@@ -26,6 +26,7 @@ public class PassportImplementation implements PassportInterface {
         DatabasePool.getConnectionPool().releaseConnection(connection);
     }
 
+
     @Override
     public Passport extractPassport(int id) throws SQLException {
         Connection connection = DatabasePool.getConnectionPool().getConnection();

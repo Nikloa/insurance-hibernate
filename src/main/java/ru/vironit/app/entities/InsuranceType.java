@@ -8,6 +8,7 @@ public class InsuranceType {
     private String insuranceType;
 
     public InsuranceType() {
+
     }
 
     public InsuranceType(int id, String insuranceType) {

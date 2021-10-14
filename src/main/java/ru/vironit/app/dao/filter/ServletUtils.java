@@ -25,6 +25,7 @@ public class ServletUtils {
         request.setAttribute(ATT_NAME_CONNECTION, conn);
     }
 
+
     // Получить объект Connection сохраненный в attribute в request.
     public static Connection getStoredConnection(ServletRequest request) {
         Connection conn = (Connection) request.getAttribute(ATT_NAME_CONNECTION);

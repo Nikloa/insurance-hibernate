@@ -97,6 +97,7 @@ public class ClientImplementation implements ClientInterface {
             statement.close();
             DatabasePool.getConnectionPool().releaseConnection(connection);
             return client;
+
         }
         return null;
     }

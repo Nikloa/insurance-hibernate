@@ -26,6 +26,7 @@ public class OfferImplementation implements OfferInterface {
         pool.releaseConnection(connection);
     }
 
+
     @Override
     public Offer extractOffer(int id) throws SQLException {
         ConnectionPool pool = DatabasePool.getConnectionPool();

@@ -15,6 +15,7 @@ public class Offer {
     private int term;
 
     public Offer() {
+
     }
 
     public Offer(int id, int insuranceTypeId, String description, BigDecimal cost, int insurerId, boolean visible, int term) {

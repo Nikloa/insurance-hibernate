@@ -10,6 +10,7 @@ public class DatabasePool {
 
     static {
         try {
+
             connectionPool = BasicConnectionPool.create("jdbc:postgresql://localhost/insurance_service?user=postgres&password=1234&ssl=false", "postgres", "1234");
         } catch (SQLException e) {
             e.printStackTrace();

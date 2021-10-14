@@ -17,7 +17,6 @@ public class Passport {
     private boolean confirmation;
 
     public Passport() {
-
     }
 
     public Passport(int id, int clientId, String firstName, String lastName, Date birthDate, String passportNumber,

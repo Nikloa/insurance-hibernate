@@ -11,6 +11,7 @@ public class Review {
     private int insurerId;
 
     public Review() {
+
     }
 
     public Review(int id, String review, double grade, int clientId, int insurerId) {

@@ -38,6 +38,7 @@ public class InsurerService implements InsurerInterface {
     @Override
     public Insurer checkInsurer(String email) throws SQLException {
         return implementation.checkInsurer(email);
+
     }
 
     @Override

@@ -38,7 +38,6 @@
                         "</li>");
             }
         %>
-
         <li>
             <div class="dropdown" style="float: right">
                 <button class="dropbtn">Sign Up</button>

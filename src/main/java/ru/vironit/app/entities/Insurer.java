@@ -9,6 +9,7 @@ public class Insurer extends User {
     private Double rating = 0.0;
 
     public Insurer() {
+
     }
 
     public Insurer (int id, String nickname, String email, String password, String companyName, int phone, Double rating) {

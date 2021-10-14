@@ -12,4 +12,5 @@ public interface InsuranceTypeInterface {
     void updateInsuranceType(InsuranceType type, int id) throws SQLException;
     void deleteInsuranceType(int id) throws SQLException;
     ArrayList<InsuranceType> allInsuranceType() throws SQLException;
+
 }

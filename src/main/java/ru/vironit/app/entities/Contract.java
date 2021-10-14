@@ -28,6 +28,7 @@ public class Contract {
         this.clientConfirmPaymentStatus = clientConfirmPaymentStatus;
         this.offerId = offerId;
         this.clientId = clientId;
+
     }
 
     public int getId() {

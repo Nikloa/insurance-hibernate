@@ -14,4 +14,5 @@ public interface OfferInterface {
     ArrayList<Offer> listOffer() throws SQLException;
     ArrayList<Offer> listInsurerOffer(int insurer_id) throws SQLException;
     ArrayList<Offer> listTypeOffer(int insurance_type_id) throws SQLException;
+
 }

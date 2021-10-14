@@ -23,6 +23,7 @@ public class LicenceImplementation implements LicenceInterface {
         preparedStatement.executeUpdate();
         preparedStatement.close();
         DatabasePool.getConnectionPool().releaseConnection(connection);
+
     }
 
     @Override

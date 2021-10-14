@@ -26,6 +26,7 @@ public class ContractImplementation implements ContractInterface {
         preparedStatement.executeUpdate();
         preparedStatement.close();
         DatabasePool.getConnectionPool().releaseConnection(connection);
+
     }
 
     @Override

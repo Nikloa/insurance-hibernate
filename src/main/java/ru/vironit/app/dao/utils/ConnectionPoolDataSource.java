@@ -23,6 +23,7 @@ public class ConnectionPoolDataSource {
             Class.forName("org.postgresql.Driver");
             System.out.println("Everything is good");
         } catch (ClassNotFoundException e) {
+
             System.err.println("PostgreSQL DataSource unable to load PostgreSQL JDBC Driver");
         }
     }

@@ -13,4 +13,5 @@ public interface ContractInterface {
     void deleteContract(int id) throws SQLException;
     ArrayList<Contract> listClientContract(int id) throws SQLException;
     int countContract(int insurer_id) throws SQLException;
+
 }
