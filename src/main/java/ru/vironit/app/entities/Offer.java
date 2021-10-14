@@ -7,22 +7,24 @@ import java.util.Objects;
 public class Offer {
 
     private int Id;
-    private int insuranceType;
+    private int insuranceTypeId;
     private String description;
-    private Date term;
     private BigDecimal cost;
     private int insurerId;
+    private boolean visible;
+    private int term;
 
     public Offer() {
     }
 
-    public Offer(int id, int insuranceType, String description, Date term, BigDecimal cost, int insurerId) {
+    public Offer(int id, int insuranceTypeId, String description, BigDecimal cost, int insurerId, boolean visible, int term) {
         Id = id;
-        this.insuranceType = insuranceType;
+        this.insuranceTypeId = insuranceTypeId;
         this.description = description;
         this.term = term;
         this.cost = cost;
         this.insurerId = insurerId;
+        this.visible = visible;
     }
 
     public int getId() {
@@ -33,12 +35,12 @@ public class Offer {
         Id = id;
     }
 
-    public int getInsuranceType() {
-        return insuranceType;
+    public int getInsuranceTypeId() {
+        return insuranceTypeId;
     }
 
-    public void setInsuranceType(int insuranceType) {
-        this.insuranceType = insuranceType;
+    public void setInsuranceTypeId(int insuranceType) {
+        this.insuranceTypeId = insuranceType;
     }
 
     public String getDescription() {
@@ -49,11 +51,11 @@ public class Offer {
         this.description = description;
     }
 
-    public Date getTerm() {
+    public int getTerm() {
         return term;
     }
 
-    public void setTerm(Date term) {
+    public void setTerm(int term) {
         this.term = term;
     }
 
@@ -73,11 +75,19 @@ public class Offer {
         this.insurerId = insurerId;
     }
 
+    public boolean isVisible() {
+        return visible;
+    }
+
+    public void setVisible(boolean visible) {
+        this.visible = visible;
+    }
+
     @Override
     public String toString() {
         return "Offers{" +
                 "Id=" + Id +
-                ", insuranceType=" + insuranceType +
+                ", insuranceType=" + insuranceTypeId +
                 ", description='" + description + '\'' +
                 ", term=" + term +
                 ", cost=" + cost +
@@ -90,11 +100,11 @@ public class Offer {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Offer offers = (Offer) o;
-        return Id == offers.Id && insuranceType == offers.insuranceType && insurerId == offers.insurerId && Objects.equals(description, offers.description) && Objects.equals(term, offers.term) && Objects.equals(cost, offers.cost);
+        return Id == offers.Id && insuranceTypeId == offers.insuranceTypeId && insurerId == offers.insurerId && Objects.equals(description, offers.description) && Objects.equals(term, offers.term) && Objects.equals(cost, offers.cost);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(Id, insuranceType, description, term, cost, insurerId);
+        return Objects.hash(Id, insuranceTypeId, description, term, cost, insurerId);
     }
 }

@@ -30,19 +30,21 @@ public class LicenceImplementation implements LicenceInterface {
         Connection connection = DatabasePool.getConnectionPool().getConnection();
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery("select * from licences where id = " + id);
-        resultSet.next();
-        Licence licence = new Licence(resultSet.getInt(1),
-                resultSet.getInt(2),
-                resultSet.getString(3),
-                resultSet.getString(4),
-                resultSet.getInt(5),
-                resultSet.getString(6),
-                resultSet.getDate(7),
-                resultSet.getInt(8),
-                resultSet.getBoolean(9));
-        statement.close();
-        DatabasePool.getConnectionPool().releaseConnection(connection);
-        return licence;
+        if(resultSet.next()) {
+            Licence licence = new Licence(resultSet.getInt(1),
+                    resultSet.getInt(2),
+                    resultSet.getString(3),
+                    resultSet.getString(4),
+                    resultSet.getInt(5),
+                    resultSet.getString(6),
+                    resultSet.getDate(7),
+                    resultSet.getInt(8),
+                    resultSet.getBoolean(9));
+            statement.close();
+            DatabasePool.getConnectionPool().releaseConnection(connection);
+            return licence;
+        }
+        return null;
     }
 
     @Override

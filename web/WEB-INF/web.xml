@@ -67,12 +67,42 @@
 
     <servlet>
         <servlet-name>profile</servlet-name>
-        <servlet-class>ru.vironit.app.servlets.ProfileServlet</servlet-class>
+        <servlet-class>ru.vironit.app.servlets.ProfileClientServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
         <servlet-name>profile</servlet-name>
         <url-pattern>/profile</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>profileInsurer</servlet-name>
+        <servlet-class>ru.vironit.app.servlets.ProfileInsurerServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>profileInsurer</servlet-name>
+        <url-pattern>/profileInsurer</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>offers</servlet-name>
+        <servlet-class>ru.vironit.app.servlets.OffersServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>offers</servlet-name>
+        <url-pattern>/offers</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>offer</servlet-name>
+        <servlet-class>ru.vironit.app.servlets.OfferServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>offer</servlet-name>
+        <url-pattern>/offer</url-pattern>
     </servlet-mapping>
 
     <servlet>

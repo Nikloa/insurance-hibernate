@@ -5,6 +5,7 @@ import ru.vironit.app.dao.interfaces.ContractInterface;
 import ru.vironit.app.entities.Contract;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class ContractService implements ContractInterface {
 
@@ -33,5 +34,15 @@ public class ContractService implements ContractInterface {
     @Override
     public void deleteContract(int id) throws  SQLException {
         implementation.deleteContract(id);
+    }
+
+    @Override
+    public ArrayList<Contract> listClientContract(int id) throws SQLException {
+        return implementation.listClientContract(id);
+    }
+
+    @Override
+    public int countContract(int insurer_id) throws SQLException {
+        return implementation.countContract(insurer_id);
     }
 }

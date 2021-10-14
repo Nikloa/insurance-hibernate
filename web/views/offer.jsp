@@ -1,11 +1,14 @@
 <%@ page import="ru.vironit.app.dao.filter.ServletUtils" %>
-<%@ page import="java.util.ArrayList" %>
-<%@ page import="ru.vironit.app.entities.*" %>
-<%@ page import="ru.vironit.app.services.*" %><%--
+<%@ page import="ru.vironit.app.entities.Offer" %>
+<%@ page import="ru.vironit.app.services.OfferService" %>
+<%@ page import="ru.vironit.app.entities.InsuranceType" %>
+<%@ page import="ru.vironit.app.services.InsuranceTypeService" %>
+<%@ page import="ru.vironit.app.entities.Insurer" %>
+<%@ page import="ru.vironit.app.services.InsurerService" %><%--
   Created by IntelliJ IDEA.
   User: User
-  Date: 05.10.2021
-  Time: 13:35
+  Date: 13.10.2021
+  Time: 13:51
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -16,6 +19,7 @@
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 </head>
 <body>
+<%System.out.println("offer jsp " + request.getHeader("referer"));%>
 <div class="bg">
     <ul>
         <a><span class="icon-phone2"></span><span class="text">+ 1235 2355 98</span></a>
@@ -57,55 +61,43 @@
         </li>
     </ul>
     <div class="grid-container">
-        <% Client client = (Client) ServletUtils.getLoggedUser(session);
-        Passport passport = new PassportService().extractPassport(client.getId());
-        ArrayList<Contract> contracts = new ContractService().listClientContract(client.getId());
-        %>
-        <h1 align="center"><%out.println(client.getNickname());%></h1>
-        <div class="w3-row-padding">
-            <div class="w3-third">
-                <img src="https://icon-library.com/images/no-photo-available-icon/no-photo-available-icon-20.jpg" />
-                <p>Email: <%out.println(client.getEmail());%></p>
-                <p>Your rating: <%out.println(client.getRating());%></p>
-                <p>Your balance: <%out.println(client.getBalance());%>$</p>
-                <p><button>Search Insurance</button></p>
-                <p><button>Change Profile</button></p>
-                <p><button>Passport Data</button></p>
-                <p>
-                    <%
-                    if(passport != null) {
-                        if(passport.isConfirmation()) {
-                            out.println("Passport data checked!");
-                        } else {
-                            out.println("Passport data don't checked");
-                        }
-                    } else {
-                        out.println("Passport data don't entered");
-                    }
-                    %>
-                </p>
-            </div>
-            <div class="w3-twothird">
-                <h2>My Contracts</h2>
-                <%
-                if(!contracts.isEmpty()) {
-                    for(Contract contract : contracts) {
-                        Offer offer = new OfferService().extractOffer(contract.getOfferId());
-                        Insurer insurer = new InsurerService().extractInsurer(offer.getInsurerId());
-                        InsuranceType insuranceType = new InsuranceTypeService().extractInsuranceType(offer.getInsuranceTypeId());
-                        out.println("<h4>" + insuranceType.getInsuranceType() + "</h4>" +
-                        "");
-                    }
-                } else {
-                    out.println("<h4>No have actual contracts</h4>");
-                }
-                %>
-            </div>
-        </div>
+        <h2>Offers</h2>
 
+            <%
+
+                Offer offer = new OfferService().extractOffer((int) session.getAttribute("view"));
+
+                Insurer insurer = new InsurerService().extractInsurer(offer.getInsurerId());
+                InsuranceType insuranceType = new InsuranceTypeService().extractInsuranceType(offer.getInsuranceTypeId());
+                out.println("<div>" +
+                        "<h3>" + insuranceType.getInsuranceType() + "</h3>" +
+                        "<h4>" + offer.getDescription() + "</h4>" +
+                        "<h4>Cost: " + offer.getCost() + "$</h4>" +
+                        "<h4>Term: " + offer.getTerm() + " days</h4>" +
+                        "<h4>Company: " + insurer.getCompanyName() + "</h4>" +
+                        "<h4>Rating: " + insurer.getRating() + "</h4>" +
+                        "</div>");
+            %>
+        <form method="post">
+            <button type="submit" name="buy" value="<%out.println(offer.getId());%>">Buy</button>
+        </form>
     </div>
 </div>
 </body>
+<style>
+    .td{
+        width: 900px;
+        height:50px;
+        border: solid 1px silver;
+        text-align:center;
+    }
+    .tdfirst{
+        width: 900px;
+        height:50px;
+        border: solid 1px silver;
+        text-align:left;
+    }
+</style>
 <style>
     body, html {
         height: 100%;
@@ -115,7 +107,7 @@
     .bg {
         background-image: url(https://cdn.pixabay.com/photo/2021/09/25/10/08/road-6654573_960_720.jpg);
 
-        height: 100%;
+        min-height: 100vh;
 
         background-position: center;
         background-repeat: no-repeat;
@@ -168,11 +160,11 @@
 </style>
 <style>
     .grid-container {
-        position: absolute;
-        top: 50%;
+        position: relative;
+        top: 0px;
         left: 50%;
         margin-right: -50%;
-        transform: translate(-50%, -50%);
+        transform: translate(-50%);
         background-color: #2196F3;
         padding: 10px;
         width: 1500px;
@@ -292,4 +284,5 @@
         background: #6ab65c;
     }
 </style>
+</html>
 </html>

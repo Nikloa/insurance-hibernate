@@ -37,7 +37,7 @@ public class ServletUtils {
         try {
             switch (role) {
                 case "ADMIN": {
-                    Admin loggedUser = new AdminImplementation().extractAdmin(email);
+                    Admin loggedUser = new AdminImplementation().checkAdmin(email);
                     loggedUser.setRole(Role.ADMIN);
                     session.setAttribute("loggedUser", loggedUser);
                     if(loggedUser != null) {
@@ -45,7 +45,7 @@ public class ServletUtils {
                     break;
                 }
                 case "INSURER": {
-                    Insurer loggedUser = new InsurerImplementation().extractInsurer(email);
+                    Insurer loggedUser = new InsurerImplementation().checkInsurer(email);
                     loggedUser.setRole(Role.INSURER);
                     session.setAttribute("loggedUser", loggedUser);
                     if(loggedUser != null) {
@@ -53,7 +53,7 @@ public class ServletUtils {
                     break;
                 }
                 case "CLIENT": {
-                    Client loggedUser = new ClientImplementation().extractClient(email);
+                    Client loggedUser = new ClientImplementation().checkClient(email);
                     if(loggedUser != null) {
                     System.out.println(loggedUser);
                     loggedUser.setRole(Role.CLIENT);

@@ -12,4 +12,6 @@ public interface OfferInterface {
     void updateOffer(Offer offer, int id) throws SQLException;
     void deleteOffer(int id) throws SQLException;
     ArrayList<Offer> listOffer() throws SQLException;
+    ArrayList<Offer> listInsurerOffer(int insurer_id) throws SQLException;
+    ArrayList<Offer> listTypeOffer(int insurance_type_id) throws SQLException;
 }

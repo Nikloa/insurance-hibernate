@@ -28,7 +28,7 @@
                         "<button class=\"dropbtn\">Profile</button>" +
                         "<div class=\"dropdown-content\">" +
                         "<a href='/profile'>" + ServletUtils.getUserEmailInCookie(request) + "</a>" +
-                        "<form method=\"post\"><input style=\"float: right\" type=\"submit\" name=\"logout\" value=\"Logout\"></form>" +
+                        "<form method=\"post\"><input style=\"float: right\" class=\"searchSubmit\" type=\"submit\" name=\"logout\" value=\"Logout\"></form>" +
                         "</div>" +
                         "</div>" +
                         "</li>");
@@ -51,61 +51,127 @@
         <li><a href='/'>Home</a></li>
         <li style="float: revert">
             <form>
-                <input type="text" name="search" placeholder="Search..">
-                <input type="submit" value="Search">
+                <input class="search" type="text" name="search" placeholder="Search..">
+                <input class="searchSubmit" type="submit" value="Search">
             </form>
         </li>
     </ul>
     <div class="grid-container">
-        <% Client client = (Client) ServletUtils.getLoggedUser(session);
-        Passport passport = new PassportService().extractPassport(client.getId());
-        ArrayList<Contract> contracts = new ContractService().listClientContract(client.getId());
+        <% Insurer insurer = (Insurer) ServletUtils.getLoggedUser(session);
+        Licence licence = new LicenceService().extractLicence(insurer.getId());
+        ArrayList<Offer> offers = new OfferService().listInsurerOffer(insurer.getId());
         %>
-        <h1 align="center"><%out.println(client.getNickname());%></h1>
+        <h1 align="center"><%out.println(insurer.getCompanyName());%></h1>
         <div class="w3-row-padding">
             <div class="w3-third">
                 <img src="https://icon-library.com/images/no-photo-available-icon/no-photo-available-icon-20.jpg" />
-                <p>Email: <%out.println(client.getEmail());%></p>
-                <p>Your rating: <%out.println(client.getRating());%></p>
-                <p>Your balance: <%out.println(client.getBalance());%>$</p>
-                <p><button>Search Insurance</button></p>
-                <p><button>Change Profile</button></p>
-                <p><button>Passport Data</button></p>
+                <p>Email: <%out.println(insurer.getEmail());%></p>
+                <p>Your rating: <%out.println(insurer.getRating());%></p>
+                <p><button onclick="document.getElementById('id01').style.display='block'" class="w3-button w3-green w3-large">Create Offer</button></p>
+                <p><form><button type="submit" name="changeProfile" value="ty">Change Profile</button></form></p>
+                <p><button>Licence Data</button></p>
                 <p>
                     <%
-                    if(passport != null) {
-                        if(passport.isConfirmation()) {
-                            out.println("Passport data checked!");
+                    if(licence != null) {
+                        if(licence.isConfirmation()) {
+                            out.println("Licence data checked!");
                         } else {
-                            out.println("Passport data don't checked");
+                            out.println("Licence data don't checked");
                         }
                     } else {
-                        out.println("Passport data don't entered");
+                        out.println("Licence data don't entered");
                     }
                     %>
                 </p>
             </div>
             <div class="w3-twothird">
                 <h2>My Contracts</h2>
+                <table>
                 <%
-                if(!contracts.isEmpty()) {
-                    for(Contract contract : contracts) {
-                        Offer offer = new OfferService().extractOffer(contract.getOfferId());
-                        Insurer insurer = new InsurerService().extractInsurer(offer.getInsurerId());
+                if(!offers.isEmpty()) {
+                    for(Offer offer : offers) {
                         InsuranceType insuranceType = new InsuranceTypeService().extractInsuranceType(offer.getInsuranceTypeId());
-                        out.println("<h4>" + insuranceType.getInsuranceType() + "</h4>" +
-                        "");
+                        out.println("<tr>\n" +
+                                "       <td colspan=\"5\" class=\"tdfirst\">\n" +
+                                "           <details>\n" +
+                                "               <summary>" + insuranceType.getInsuranceType() + "</summary>\n" +
+                                "               <p>" + offer.getDescription() + "</p>\n" +
+                                "           </details>\n" +
+                                "       </td>\n" +
+                                "    </tr>\n" +
+                                "    <tr>\n" +
+                                "       <td class=\"td\">" + offer.getCost() + "$</td>" +
+                                "       <td class=\"td\">" + offer.getTerm() + " days</td>" +
+                                "       <td class=\"td\">Counter</td>" +
+                                "       <td class=\"td\"><button type=\"submit\" name=\"visibleButton\" value=\"true\">Visible</button></td>" +
+                                "       <td class=\"td\">delete</td>\n" +
+                                "    </tr>"
+                        );
                     }
                 } else {
                     out.println("<h4>No have actual contracts</h4>");
                 }
                 %>
+                </table>
             </div>
         </div>
 
     </div>
+    <div id="id01" class="w3-modal">
+        <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width:600px">
+
+            <div class="w3-center"><br>
+                <span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-xlarge w3-transparent w3-display-topright" title="Close Modal">×</span>
+            </div>
+
+            <form class="w3-container" method="post">
+                <div class="w3-section">
+                    <label><b>Insurance Type</b></label>
+                    <select name="insuranceType" id="" class="w3-input w3-border w3-margin-bottom" placeholder="Keyword search">
+                        <%
+                            ArrayList<InsuranceType> typeList= new InsuranceTypeService().allInsuranceType();
+                            for(InsuranceType type : typeList) {
+                                out.println("<option value=\"" + type.getId() + "\">" + type.getInsuranceType() + "</option>");
+                            }
+                        %>
+                    </select>
+                    <label><b>Description</b></label>
+                    <textarea cols="60" rows="5" class="w3-input w3-border" placeholder="Enter Description" name="description" required></textarea>
+                    <label><b>Term</b></label>
+                    <div class="w3-input w3-border w3-margin-bottom">
+                        <input  class="w3-input" type="number" placeholder="Enter Term" name="term" id="term" required>
+                        <select class="w3-input" name="termType">
+                            <option value="1">Days</option>
+                            <option value="7">Weeks</option>
+                            <option value="30">Months</option>
+                            <option value="365">Years</option>
+                        </select>
+                    </div>
+                    <label><b>Cost</b></label>
+                    <div class="w3-input w3-border w3-margin-bottom">
+                        <label><b>$</b><input type="number" placeholder="Enter Cost" name="cost" required></label>
+                    </div>
+                    <button class="w3-button w3-block w3-green w3-section w3-padding" type="submit" name="offerButton" value="true">Add</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 </body>
+<style>
+    .td{
+        width: 900px;
+        height:50px;
+        border: solid 1px silver;
+        text-align:center;
+    }
+    .tdfirst{
+        width: 900px;
+        height:50px;
+        border: solid 1px silver;
+        text-align:left;
+    }
+</style>
 <style>
     body, html {
         height: 100%;
@@ -115,10 +181,10 @@
     .bg {
         background-image: url(https://cdn.pixabay.com/photo/2021/09/25/10/08/road-6654573_960_720.jpg);
 
-        height: 100%;
+        min-height: 100vh;
 
         background-position: center;
-        background-repeat: no-repeat;
+        background-repeat: repeat-x;
         background-size: cover;
     }
 
@@ -168,17 +234,15 @@
 </style>
 <style>
     .grid-container {
-        position: absolute;
-        top: 50%;
+        position: relative;
+        top: 0px;
         left: 50%;
         margin-right: -50%;
-        transform: translate(-50%, -50%);
+        transform: translate(-50%);
         background-color: #2196F3;
         padding: 10px;
         width: 1500px;
     }
-
-
 </style>
 <style>
     ul {
@@ -214,7 +278,7 @@
         padding: 14px 16px;
         text-decoration: none;
     }
-    form input[type=text] {
+    .search {
         width: 130px;
         box-sizing: border-box;
         border-radius: 4px;
@@ -229,10 +293,10 @@
         transition: width 0.4s ease-in-out;
     }
 
-    form input[type=text]:focus {
+    .search:focus {
         width: 45%;
     }
-    form input[type=submit] {
+    .searchSubmit {
         text-align: center;
         padding: 12px 20px;
         color: white;

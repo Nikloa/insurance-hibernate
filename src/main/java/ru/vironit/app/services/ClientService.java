@@ -20,8 +20,8 @@ public class ClientService implements ClientInterface {
     }
 
     @Override
-    public Client extractClient(String nickname) throws SQLException {
-        Client client = implementation.extractClient(nickname);
+    public Client extractClient(int id) throws SQLException {
+        Client client = implementation.extractClient(id);
         return client;
     }
 
@@ -36,7 +36,7 @@ public class ClientService implements ClientInterface {
     }
 
     @Override
-    public boolean checkClient(String email) throws SQLException {
+    public Client checkClient(String email) throws SQLException {
         return implementation.checkClient(email);
     }
 

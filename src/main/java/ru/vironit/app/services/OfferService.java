@@ -40,4 +40,14 @@ public class OfferService implements OfferInterface {
     public ArrayList<Offer> listOffer() throws SQLException {
         return implementation.listOffer();
     }
+
+    @Override
+    public ArrayList<Offer> listInsurerOffer(int insurer_id) throws SQLException {
+        return implementation.listInsurerOffer(insurer_id);
+    }
+
+    @Override
+    public ArrayList<Offer> listTypeOffer(int insurance_type_id) throws SQLException {
+        return implementation.listTypeOffer(insurance_type_id);
+    }
 }

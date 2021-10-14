@@ -27,8 +27,8 @@ public class LoginInsurerServlet extends HttpServlet {
         try {
             if(insurerService.loginInsurer(email, request.getParameter("password"))) {
                 ServletUtils.storeUserCookie(response, email, "INSURER");
-                response.sendRedirect("history.back()");
-                System.out.println("Login Servlet ----- INSURER");
+                System.out.println(request.getHeader("referer"));
+                response.sendRedirect(request.getHeader("referer"));
             } else {
                 doGet(request, response);
             }

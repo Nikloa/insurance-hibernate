@@ -26,7 +26,7 @@
             <input type="password" name="password" placeholder="Enter Password"><br />
         </label>
 
-        <button type="submit" class="btn" onclick="history.back()">Submit</button>
+        <button type="submit" class="btn" name="button" value="<%out.println(request.getHeader("referer"));%>">Submit</button>
     </form>
 </div>
 

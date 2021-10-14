@@ -1,5 +1,6 @@
 package ru.vironit.app.dao.implementation;
 
+import ru.vironit.app.dao.interfaces.ConnectionPool;
 import ru.vironit.app.dao.interfaces.InsurerInterface;
 import ru.vironit.app.dao.utils.DatabasePool;
 import ru.vironit.app.entities.Insurer;
@@ -29,17 +30,23 @@ public class InsurerImplementation implements InsurerInterface {
     }
 
     @Override
-    public Insurer extractInsurer(String email) throws SQLException {
-        ResultSet resultSet = DatabasePool.getConnectionPool().getConnection().createStatement().executeQuery("select * from insurers where email like '" + email + "'");
-        resultSet.next();
-        Insurer insurer = new Insurer(resultSet.getInt(1),
-                resultSet.getString(2),
-                resultSet.getString(3),
-                resultSet.getString(4),
-                resultSet.getString(5),
-                resultSet.getInt(6),
-                resultSet.getDouble(8));
-        return insurer;
+    public Insurer extractInsurer(int id) throws SQLException {
+        ConnectionPool pool = DatabasePool.getConnectionPool();
+        Connection connection = pool.getConnection();
+        ResultSet resultSet = connection.createStatement().executeQuery("select * from insurers where id = " + id);
+        if(resultSet.next()) {
+            Insurer insurer = new Insurer(resultSet.getInt(1),
+                    resultSet.getString(2),
+                    resultSet.getString(3),
+                    resultSet.getString(4),
+                    resultSet.getString(5),
+                    resultSet.getInt(6),
+                    resultSet.getDouble(8));
+            pool.releaseConnection(connection);
+            return insurer;
+        }
+        pool.releaseConnection(connection);
+        return null;
     }
 
     @Override
@@ -73,11 +80,19 @@ public class InsurerImplementation implements InsurerInterface {
     }
 
     @Override
-    public boolean checkInsurer(String email) throws SQLException {
-        Connection connection = DatabasePool.getConnectionPool().getConnection();
-        Statement statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery("select * from insurers where email like '" + email + "'");
-        return resultSet.next();
+    public Insurer checkInsurer(String email) throws SQLException {
+        ResultSet resultSet = DatabasePool.getConnectionPool().getConnection().createStatement().executeQuery("select * from insurers where email like '" + email + "'");
+        if(resultSet.next()) {
+            Insurer insurer = new Insurer(resultSet.getInt(1),
+                    resultSet.getString(2),
+                    resultSet.getString(3),
+                    resultSet.getString(4),
+                    resultSet.getString(5),
+                    resultSet.getInt(6),
+                    resultSet.getDouble(8));
+            return insurer;
+        }
+        return null;
     }
 
     @Override

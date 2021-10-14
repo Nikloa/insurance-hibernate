@@ -31,20 +31,22 @@ public class PassportImplementation implements PassportInterface {
         Connection connection = DatabasePool.getConnectionPool().getConnection();
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery("select * from passports where id = " + id);
-        resultSet.next();
-        Passport passport = new Passport(resultSet.getInt(1),
-                resultSet.getInt(2),
-                resultSet.getString(3),
-                resultSet.getString(4),
-                resultSet.getDate(5),
-                resultSet.getString(6),
-                resultSet.getString(7),
-                resultSet.getDate(8),
-                resultSet.getString(9),
-                resultSet.getBoolean(11));
-        statement.close();
-        DatabasePool.getConnectionPool().releaseConnection(connection);
-        return passport;
+        if(resultSet.next()) {
+            Passport passport = new Passport(resultSet.getInt(1),
+                    resultSet.getInt(2),
+                    resultSet.getString(3),
+                    resultSet.getString(4),
+                    resultSet.getDate(5),
+                    resultSet.getString(6),
+                    resultSet.getString(7),
+                    resultSet.getDate(8),
+                    resultSet.getString(9),
+                    resultSet.getBoolean(11));
+            statement.close();
+            DatabasePool.getConnectionPool().releaseConnection(connection);
+            return passport;
+        }
+        return null;
     }
 
     @Override

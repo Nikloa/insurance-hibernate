@@ -28,7 +28,7 @@ public class AddClientServlet extends HttpServlet {
         ClientService clientService = new ClientService();
         String email = request.getParameter("email");
         try {
-            if(!clientService.checkClient(email)) {
+            if(clientService.checkClient(email) == null) {
                 Client client = new Client();
                 client.setNickname(request.getParameter("nickname"));
                 client.setRole(Role.CLIENT);

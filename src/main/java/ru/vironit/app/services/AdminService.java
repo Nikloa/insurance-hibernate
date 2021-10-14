@@ -20,8 +20,8 @@ public class AdminService implements AdminInterface {
     }
 
     @Override
-    public Admin extractAdmin(String email) throws SQLException {
-        Admin admin = implementation.extractAdmin(email);
+    public Admin extractAdmin(int id) throws SQLException {
+        Admin admin = implementation.extractAdmin(id);
         return admin;
     }
 
@@ -33,5 +33,10 @@ public class AdminService implements AdminInterface {
     @Override
     public void deleteAdmin(int id) throws  SQLException {
         implementation.deleteAdmin(id);
+    }
+
+    @Override
+    public Admin checkAdmin(String email) throws SQLException {
+        return implementation.checkAdmin(email);
     }
 }

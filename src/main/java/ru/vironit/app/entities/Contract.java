@@ -20,14 +20,14 @@ public class Contract {
 
     public Contract(int id, Date date, boolean insurerConfirmContractStatus, boolean insurerConfirmPaymentStatus, boolean clientIncidentStatus, boolean insurerConfirmIncidentStatus, boolean clientConfirmPaymentStatus, int clientId, int offerId ) {
         this.id = id;
-        this.offerId = offerId;
-        this.clientId = clientId;
         this.date = date;
         this.insurerConfirmContractStatus = insurerConfirmContractStatus;
         this.insurerConfirmPaymentStatus = insurerConfirmPaymentStatus;
         this.clientIncidentStatus = clientIncidentStatus;
         this.insurerConfirmIncidentStatus = insurerConfirmIncidentStatus;
         this.clientConfirmPaymentStatus = clientConfirmPaymentStatus;
+        this.offerId = offerId;
+        this.clientId = clientId;
     }
 
     public int getId() {

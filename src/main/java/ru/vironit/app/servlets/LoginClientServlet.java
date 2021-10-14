@@ -6,6 +6,7 @@ import ru.vironit.app.entities.User;
 import ru.vironit.app.services.ClientService;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -28,7 +29,11 @@ public class LoginClientServlet extends HttpServlet {
         try {
             if(new ClientService().loginClient(request.getParameter("email"), request.getParameter("password"))) {
                 ServletUtils.storeUserCookie(response, request.getParameter("email"), "CLIENT");
-                response.sendRedirect("history.back()");
+                System.out.println(request.getHeader("referer"));
+                System.out.println(request.getParameter("button"));
+                //response.sendRedirect(request.getHeader("referer"));
+                response.sendRedirect(request.getParameter("button"));
+                //response.sendRedirect((String) request.getAttribute("javax.servlet.forward.request_uri"));
             } else {
                 doGet(request, response);
             }

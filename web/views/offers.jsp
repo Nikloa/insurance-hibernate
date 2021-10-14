@@ -1,117 +1,111 @@
-<%@ page import="ru.vironit.app.entities.Client" %>
 <%@ page import="ru.vironit.app.dao.filter.ServletUtils" %>
-<%@ page import="ru.vironit.app.services.InsuranceTypeService" %>
 <%@ page import="java.util.ArrayList" %>
+<%@ page import="ru.vironit.app.entities.Offer" %>
+<%@ page import="ru.vironit.app.services.OfferService" %>
+<%@ page import="ru.vironit.app.services.InsuranceTypeService" %>
+<%@ page import="ru.vironit.app.services.InsurerService" %>
 <%@ page import="ru.vironit.app.entities.InsuranceType" %>
-<%@ page import="ru.vironit.app.entities.User" %>
-<%@ page import="ru.vironit.app.entities.Role" %>
-<!DOCTYPE html>
-<html lang="en">
-<!--
+<%@ page import="ru.vironit.app.entities.Insurer" %><%--
+  Created by IntelliJ IDEA.
+  User: User
+  Date: 12.10.2021
+  Time: 17:01
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<html>
 <head>
     <meta charset="UTF-8">
-    <title>First Web Project</title>
+    <title>Profile</title>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 </head>
-<body class="w3-light-grey">
-    <div class="w3-container w3-blue-grey w3-opacity w3-right-align">
-        <h1>First Web App</h1>
-    </div>
-
-    <div class="w3-container w3-center">
-        <div class="w3-bar w3-padding-large w3-padding-24">
-        <button class="w3-btn w3-hover-light-blue w3-round-large" onclick="location.href='/list'">List users</button>
-        <button class="w3-btn w3-hover-green w3-round-large" onclick="location.href='/add'">Add user</button>
-        </div>
-    </div>
-</body>
--->
-<head>
-    <meta charset="UTF-8">
-    <title>Insurance</title>
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-</head>
-
 <body>
 <div class="bg">
-<ul>
-    <a><span class="icon-phone2"></span><span class="text">+ 1235 2355 98</span></a>
-    <a><span class="icon-paper-plane"></span> <span class="text">youremail@email.com</span></a>
+    <ul>
+        <a><span class="icon-phone2"></span><span class="text">+ 1235 2355 98</span></a>
+        <a><span class="icon-paper-plane"></span> <span class="text">youremail@email.com</span></a>
 
-    <%
-        User user = ServletUtils.getLoggedUser(session);
-        if(user != null) {
-            String way = "";
-            System.out.println(user.getRole());
-            if(user.getRole() == Role.CLIENT) way = "profile";
-            if(user.getRole() == Role.INSURER) way = "profileInsurer";
-        out.println("<li>" +
+        <%
+            if(ServletUtils.getLoggedUser(session) != null) {
+                out.println("<li>" +
                         "<div class=\"dropdown\" style=\"float: right\">" +
-                            "<button class=\"dropbtn\">Profile</button>" +
-                            "<div class=\"dropdown-content\">" +
-                                "<a href='/" + way + "'>" + ServletUtils.getUserEmailInCookie(request) + "</a>" +
-                                "<form method=\"post\"><input style=\"float: right\" type=\"submit\" name=\"logout\" value=\"Logout\"></form>" +
-                            "</div>" +
+                        "<button class=\"dropbtn\">Profile</button>" +
+                        "<div class=\"dropdown-content\">" +
+                        "<a href='/profile'>" + ServletUtils.getUserEmailInCookie(request) + "</a>" +
+                        "<form method=\"post\"><input style=\"float: right\" type=\"submit\" name=\"logout\" value=\"Logout\"></form>" +
                         "</div>" +
-                    "</li>");
-        }
-    %>
-    <li>
-        <div class="dropdown" style="float: right">
-        <button class="dropbtn">Sign Up</button>
-        <div class="dropdown-content">
-            <a href='/add'>Client</a>
-            <a href='/addInsurer'>Insurer</a>
-            </div>
-        </div>
-    </li>
-    <li><a onclick="openChoice()">Sign In</a></li>
-    <li><a href='/offers'>Offers</a></li>
-    <li><a href="#contact">Contact</a></li>
-    <li><a href="#news">News</a></li>
-    <li><a class="active" href='/'>Home</a></li>
-    <li style="float: revert">
-        <form>
-        <input type="text" name="search" placeholder="Search..">
-        <input type="submit" value="Search">
-        </form>
-    </li>
-</ul>
+                        "</div>" +
+                        "</li>");
+            }
+        %>
 
+        <li>
+            <div class="dropdown" style="float: right">
+                <button class="dropbtn">Sign Up</button>
+                <div class="dropdown-content">
+                    <a href='/add'>Client</a>
+                    <a href='/addInsurer'>Insurer</a>
+                </div>
+            </div>
+        </li>
+        <li><a onclick="openChoice()">Sign In</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="#news">News</a></li>
+        <li><a href='/'>Home</a></li>
+        <li style="float: revert">
+            <form>
+                <input type="text" name="search" placeholder="Search..">
+                <input type="submit" value="Search">
+            </form>
+        </li>
+    </ul>
     <div class="grid-container">
-        <form action="" method="post" class="">
-            <select name="" id="" class="" placeholder="Keyword search">
-                <%
-                    ArrayList<InsuranceType> typeList= new InsuranceTypeService().allInsuranceType();
-                    for(InsuranceType type : typeList) {
-                        out.println("<option value=\"" + type.getId() + "\">" + type.getInsuranceType() + "</option>");
+           <h2>Offers</h2>
+        <table>
+            <%
+                ArrayList<Offer> list = new OfferService().listOffer();
+
+                if(!list.isEmpty()) {
+                    for(Offer offer : list) {
+                        InsuranceType insuranceType = new InsuranceTypeService().extractInsuranceType(offer.getInsuranceTypeId());
+                        Insurer insurer = new InsurerService().extractInsurer(offer.getInsurerId());
+                        out.println("<tr>\n" +
+                                "       <td colspan=\"6\" class=\"tdfirst\">" + insuranceType.getInsuranceType() + "</td>" +
+                                "    </tr>" +
+                                "    <tr>\n" +
+                                "       <td class=\"td\">Cost: " + offer.getCost() + "$</td>" +
+                                "       <td class=\"td\">Term: " + offer.getTerm() + " days</td>" +
+                                "       <td class=\"td\">" + insurer.getCompanyName() + "</td>" +
+                                "       <td class=\"td\">" +
+                                "           <form method=\"post\">\n" +
+                                "               <button type=\"submit\" name=\"view\" value=\"" + offer.getId() + "\">View</button>\n" +
+                                "           </form>" +
+                                "       </td>\n" +
+                                "    </tr>");
                     }
-                %>
-            </select>
-            <input type="submit" class="" value="Search">
-        </form>
-    </div>
-    <div id="myOverlay" class="overlay">
-        <span class="closebtn" onclick="closeChoice()" title="Close Overlay">x</span>
-        <div class="overlay-content">
-                <button class="btn" onclick="location.href='/loginInsurer'">Insurer</button>
-                <button class="btn" onclick="location.href='/login'">Client</button>
-        </div>
+                } else {
+                    out.println("<h4>No have related offers</h4>");
+                }
+            %>
+        </table>
     </div>
 </div>
-
-
-<script>
-    function openChoice() {
-        document.getElementById("myOverlay").style.display = "block";
-    }
-
-    function closeChoice() {
-        document.getElementById("myOverlay").style.display = "none";
-    }
-</script>
-
 </body>
+<style>
+    .td{
+        width: 900px;
+        height:50px;
+        border: solid 1px silver;
+        text-align:center;
+    }
+    .tdfirst{
+        width: 900px;
+        height:50px;
+        border: solid 1px silver;
+        text-align:left;
+    }
+</style>
 <style>
     body, html {
         height: 100%;
@@ -121,7 +115,7 @@
     .bg {
         background-image: url(https://cdn.pixabay.com/photo/2021/09/25/10/08/road-6654573_960_720.jpg);
 
-        height: 100%;
+        min-height: 100vh;
 
         background-position: center;
         background-repeat: no-repeat;
@@ -159,6 +153,7 @@
         padding: 12px 16px;
         text-decoration: none;
         display: block;
+
     }
 
     .dropdown-content a:hover {background-color: #f1f1f1}
@@ -173,24 +168,17 @@
 </style>
 <style>
     .grid-container {
-        position: absolute;
-        top: 50%;
+        position: relative;
+        top: 0px;
         left: 50%;
         margin-right: -50%;
-        transform: translate(-50%, -50%);
-        display: grid;
-        grid-template-columns: auto auto auto;
-        grid-gap: 10px;
+        transform: translate(-50%);
         background-color: #2196F3;
         padding: 10px;
+        width: 1500px;
     }
 
-    .grid-container > div {
-        background-color: rgba(255, 255, 255, 0.8);
-        border: 1px solid black;
-        text-align: center;
-        font-size: 15px;
-    }
+
 </style>
 <style>
     ul {
@@ -304,4 +292,5 @@
         background: #6ab65c;
     }
 </style>
+</html>
 </html>

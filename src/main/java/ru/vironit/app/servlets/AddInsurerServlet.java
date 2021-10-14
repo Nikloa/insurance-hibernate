@@ -26,7 +26,7 @@ public class AddInsurerServlet extends HttpServlet {
         String email = request.getParameter("email");
 
         try {
-            if(!insurerService.checkInsurer(email)) {
+            if(insurerService.checkInsurer(email) == null) {
                 Insurer insurer = new Insurer();
                 insurer.setNickname(request.getParameter("nickname"));
                 insurer.setEmail(email);

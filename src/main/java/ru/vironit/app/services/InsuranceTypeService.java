@@ -5,6 +5,7 @@ import ru.vironit.app.dao.interfaces.InsuranceTypeInterface;
 import ru.vironit.app.entities.InsuranceType;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class InsuranceTypeService implements InsuranceTypeInterface {
 
@@ -33,5 +34,10 @@ public class InsuranceTypeService implements InsuranceTypeInterface {
     @Override
     public void deleteInsuranceType(int id) throws  SQLException {
         implementation.deleteInsuranceType(id);
+    }
+
+    @Override
+    public ArrayList<InsuranceType> allInsuranceType() throws SQLException {
+        return implementation.allInsuranceType();
     }
 }

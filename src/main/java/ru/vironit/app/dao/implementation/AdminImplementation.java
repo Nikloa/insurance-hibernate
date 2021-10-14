@@ -21,18 +21,20 @@ public class AdminImplementation implements AdminInterface {
     }
 
     @Override
-    public Admin extractAdmin(String email) throws SQLException {
+    public Admin extractAdmin(int id) throws SQLException {
         Connection connection = DatabasePool.getConnectionPool().getConnection();
         Statement statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery("select * from admins where email like'" + email + "'");
-        resultSet.next();
-        Admin admin = new Admin(resultSet.getInt(1),
-                resultSet.getString(2),
-                resultSet.getString(3),
-                resultSet.getString(4));
-        statement.close();
-        DatabasePool.getConnectionPool().releaseConnection(connection);
-        return admin;
+        ResultSet resultSet = statement.executeQuery("select * from admins where id = " + id);
+        if(resultSet.next()) {
+            Admin admin = new Admin(resultSet.getInt(1),
+                    resultSet.getString(2),
+                    resultSet.getString(3),
+                    resultSet.getString(4));
+            statement.close();
+            DatabasePool.getConnectionPool().releaseConnection(connection);
+            return admin;
+        }
+        return null;
     }
 
     @Override
@@ -56,5 +58,22 @@ public class AdminImplementation implements AdminInterface {
         preparedStatement.executeUpdate();
         preparedStatement.close();
         DatabasePool.getConnectionPool().releaseConnection(connection);
+    }
+
+    @Override
+    public Admin checkAdmin(String email) throws SQLException {
+        Connection connection = DatabasePool.getConnectionPool().getConnection();
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery("select * from admins where email like '" + email + "'");
+        if(resultSet.next()) {
+            Admin admin = new Admin(resultSet.getInt(1),
+                    resultSet.getString(2),
+                    resultSet.getString(3),
+                    resultSet.getString(4));
+            statement.close();
+            DatabasePool.getConnectionPool().releaseConnection(connection);
+            return admin;
+        }
+        return null;
     }
 }
