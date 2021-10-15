@@ -30,8 +30,7 @@ public class LoginClientServlet extends HttpServlet {
         try {
             if(new ClientService().loginClient(request.getParameter("email"), request.getParameter("password"))) {
                 ServletUtils.storeUserCookie(response, request.getParameter("email"), "CLIENT");
-                System.out.println(request.getHeader("referer"));
-                System.out.println(request.getParameter("button"));
+                System.out.println("LoginClientServlet parameter button " + request.getParameter("button"));
                 //response.sendRedirect(request.getHeader("referer"));
                 response.sendRedirect(request.getParameter("button"));
                 //response.sendRedirect((String) request.getAttribute("javax.servlet.forward.request_uri"));

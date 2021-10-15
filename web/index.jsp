@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="ru.vironit.app.entities.Client" %>
 <%@ page import="ru.vironit.app.dao.filter.ServletUtils" %>
 <%@ page import="ru.vironit.app.services.InsuranceTypeService" %>
@@ -30,6 +31,10 @@
     <meta charset="UTF-8">
     <title>Insurance</title>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link href="css/index.css" rel="stylesheet" type="text/css" media="screen"/>
+    <style>
+        <%@include file="css/index.css"%>
+    </style>
 </head>
 <body>
 <div class="bg">
@@ -37,24 +42,23 @@
     <a><span class="icon-phone2"></span><span class="text">+ 1235 2355 98</span></a>
     <a><span class="icon-paper-plane"></span> <span class="text">youremail@email.com</span></a>
 
-    <%
-        User user = ServletUtils.getLoggedUser(session);
-        if(user != null) {
-            String way = "";
-            System.out.println(user.getRole());
-            if(user.getRole() == Role.CLIENT) way = "profile";
-            if(user.getRole() == Role.INSURER) way = "profileInsurer";
-        out.println("<li>" +
-                        "<div class=\"dropdown\" style=\"float: right\">" +
-                            "<button class=\"dropbtn\">Profile</button>" +
-                            "<div class=\"dropdown-content\">" +
-                                "<a href='/" + way + "'>" + ServletUtils.getUserEmailInCookie(request) + "</a>" +
-                                "<form method=\"post\"><input style=\"float: right\" type=\"submit\" name=\"logout\" value=\"Logout\"></form>" +
-                            "</div>" +
-                        "</div>" +
-                    "</li>");
-        }
-    %>
+    <c:if test="${user != null}">
+        <li>
+            <div class="dropdown" style="float: right">
+                <button class="dropbtn">Profile</button>
+                <div class="dropdown-content">
+                    <c:if test="${user.getRole() == Role.CLIENT}">
+                        <a href='<c:url value="/profile"/>'>${user.getEmail()}</a>
+                    </c:if>
+                    <c:if test="${user.getRole() == Role.INSURER}">
+                        <a href='<c:url value="/profileInsurer"/>'>${user.getEmail()}</a>
+                    </c:if>
+                    <form method="post"><input style="float: right" type="submit" name="logout" value="Logout"></form>
+                </div>
+            </div>
+        </li>
+    </c:if>
+
     <li>
         <div class="dropdown" style="float: right">
         <button class="dropbtn">Sign Up</button>
@@ -79,13 +83,10 @@
 
     <div class="grid-container">
         <form action="" method="post" class="">
-            <select name="" id="" class="" placeholder="Keyword search">
-                <%
-                    ArrayList<InsuranceType> typeList= new InsuranceTypeService().allInsuranceType();
-                    for(InsuranceType type : typeList) {
-                        out.println("<option value=\"" + type.getId() + "\">" + type.getInsuranceType() + "</option>");
-                    }
-                %>
+            <select name="" id="insuranceTypeList" class="">
+                <c:forEach var="type" items="${typeList}">
+                    <option value="${type.getId()}">${type.getInsuranceType()}</option>
+                </c:forEach>
             </select>
             <input type="submit" class="" value="Search">
         </form>
@@ -111,196 +112,4 @@
 </script>
 
 </body>
-<style>
-    body, html {
-        height: 100%;
-        margin: 0;
-    }
-
-    .bg {
-        background-image: url(https://cdn.pixabay.com/photo/2021/09/25/10/08/road-6654573_960_720.jpg);
-
-        height: 100%;
-
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: cover;
-    }
-
-</style>
-<style>
-    .dropbtn {
-        background-color: #333;
-        color: white;
-        padding: 13px;
-        font-size: 16px;
-        border: none;
-        cursor: pointer;
-    }
-
-    .dropdown {
-        position: relative;
-        display: inline-block;
-    }
-
-    .dropdown-content {
-        display: none;
-        position: absolute;
-        right: 0;
-        background-color: #f9f9f9;
-        min-width: auto;
-        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-        z-index: 1;
-    }
-
-    .dropdown-content a {
-        color: black;
-        padding: 12px 16px;
-        text-decoration: none;
-        display: block;
-    }
-
-    .dropdown-content a:hover {background-color: #f1f1f1}
-
-    .dropdown:hover .dropdown-content {
-        display: block;
-    }
-
-    .dropdown:hover .dropbtn {
-        background-color: #3e8e41;
-    }
-</style>
-<style>
-    .grid-container {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        margin-right: -50%;
-        transform: translate(-50%, -50%);
-        display: grid;
-        grid-template-columns: auto auto auto;
-        grid-gap: 10px;
-        background-color: #2196F3;
-        padding: 10px;
-    }
-
-    .grid-container > div {
-        background-color: rgba(255, 255, 255, 0.8);
-        border: 1px solid black;
-        text-align: center;
-        font-size: 15px;
-    }
-</style>
-<style>
-    ul {
-        list-style-type: none;
-        margin: 0;
-        padding: 0;
-        overflow: fragments;
-        background-color: #333;
-    }
-    li {
-        float: right;
-    }
-    li a {
-        display: block;
-        color: white;
-        text-align: center;
-        padding: 14px 16px;
-        text-decoration: none;
-    }
-
-    li a:hover:not(.active) {
-        background-color: #111;
-    }
-
-    .active {
-        background-color: #04AA6D;
-    }
-    a {
-        float: left;
-        display: block;
-        color: white;
-        text-align: center;
-        padding: 14px 16px;
-        text-decoration: none;
-    }
-    form input[type=text] {
-        width: 130px;
-        box-sizing: border-box;
-        border-radius: 4px;
-        font-size: 14px;
-        background-color: rgba(222, 222, 222, 0.8);
-        background-image: url('https://img.icons8.com/ios-filled/50/000000/search--v1.png');
-        background-position: 10px 10px;
-        background-repeat: no-repeat;
-        background-size: 30px;
-        padding: 12px 20px 12px 40px;
-        -webkit-transition: width 0.4s ease-in-out;
-        transition: width 0.4s ease-in-out;
-    }
-
-    form input[type=text]:focus {
-        width: 45%;
-    }
-    form input[type=submit] {
-        text-align: center;
-        padding: 12px 20px;
-        color: white;
-        background-color: #04AA6D;
-    }
-
-</style>
-
-<style>
-
-    .overlay {
-        height: 100%;
-        width: 100%;
-        display: none;
-        position: fixed;
-        z-index: 1;
-        top: 0;
-        left: 0;
-        background-color: rgb(0,0,0);
-        background-color: rgba(0,0,0, 0.9);
-    }
-
-    .overlay-content {
-        position: relative;
-        top: 50%;
-        left: 50%;
-        margin-right: -50%;
-        transform: translate(-50%, -50%);
-        text-align: center;
-    }
-
-    .overlay .closebtn {
-        position: absolute;
-        top: 20px;
-        right: 45px;
-        font-size: 60px;
-        cursor: pointer;
-        color: white;
-    }
-
-    .overlay .closebtn:hover {
-        color: #ccc;
-    }
-
-    .overlay button {
-        position: relative;
-        top: 50%;
-        transform: translateY(-50%);
-        margin: 50px;
-        background: #368d45;
-        width: 10%;
-        height: 60px;
-        text-align: center;
-    }
-
-    .overlay button:hover {
-        background: #6ab65c;
-    }
-</style>
 </html>

@@ -45,7 +45,9 @@ public class ProfileInsurerServlet extends HttpServlet {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
+            response.sendRedirect("profileInsurer");
+        } else {
+            doGet(request, response);
         }
-        doGet(request, response);
     }
 }

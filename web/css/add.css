@@ -1,0 +1,89 @@
+body, html {
+    height: 100%;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+/* Add styles to the form container */
+.container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    max-width: 500px;
+    padding: 16px;
+    background-color: white;
+}
+
+/* Full-width input fields */
+input[type=text], input[type=password], input[type=email] {
+    width: 100%;
+    padding: 15px;
+    margin: 5px 0 22px 0;
+    border: none;
+    background: #f1f1f1;
+}
+
+input[type=text]:focus, input[type=password], input[type=email]:focus {
+    background-color: #ddd;
+    outline: none;
+}
+
+/* Set a style for the submit button */
+.btn {
+    background-color: #04AA6D;
+    color: white;
+    padding: 16px 20px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    opacity: 0.9;
+}
+
+.btn:hover {
+    opacity: 1;
+}
+
+.closebtn {
+    position: absolute;
+    top: 0;
+    right: 5%;
+    font-size: 60px;
+    cursor: pointer;
+    color: #a1a1a1;
+}
+
+.closebtn:hover {
+    color: #7a7a7a;
+}
+
+.checkmark {
+    color: white;
+    padding: 16px;
+    cursor: pointer;
+    width: 100%;
+    opacity: 0.9;
+}
+
+.checkmark:hover {
+    opacity: 1;
+}
+
+  body, html {
+      height: 100%;
+      margin: 0;
+  }
+
+.bg {
+    background-image: url(https://catherineasquithgallery.com/uploads/posts/2021-02/1612569658_107-p-fon-zelenogo-sada-185.jpg);
+
+    height: 100%;
+
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
