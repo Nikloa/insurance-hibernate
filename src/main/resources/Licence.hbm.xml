@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="ru.vironit.app.entities.Licence" table="licences" schema="public" catalog="insurance_service">
+        <id name="id" column="id"><generator class="increment"/></id>
+        <property name="insurerId" column="insurer_id"/>
+        <property name="insurerName" column="insurer_name"/>
+        <property name="address" column="address"/>
+        <property name="taxpayerIdentificationNumber" column="taxpayer_identification_number"/>
+        <property name="licenceNumber" column="licence_number"/>
+        <property name="issueDecisionDate" column="issue_decision_date"/>
+        <property name="issueDecisionNumber" column="issue_decision_number"/>
+        <property name="confirmation" column="confirmation"/>
+    </class>
+</hibernate-mapping>

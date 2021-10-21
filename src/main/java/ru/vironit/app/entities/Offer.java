@@ -1,12 +1,14 @@
 package ru.vironit.app.entities;
 
+import javax.persistence.*;
 import java.math.BigDecimal;
-import java.sql.Date;
 import java.util.Objects;
 
+@Entity
+@Table(name = "offers", schema = "public", catalog = "insurance_service")
 public class Offer {
 
-    private int Id;
+    private int id;
     private int insuranceTypeId;
     private String description;
     private BigDecimal cost;
@@ -19,7 +21,7 @@ public class Offer {
     }
 
     public Offer(int id, int insuranceTypeId, String description, BigDecimal cost, int insurerId, boolean visible, int term) {
-        Id = id;
+        this.id = id;
         this.insuranceTypeId = insuranceTypeId;
         this.description = description;
         this.term = term;
@@ -28,14 +30,18 @@ public class Offer {
         this.visible = visible;
     }
 
+    @Id
+    @Column(name = "id")
     public int getId() {
-        return Id;
+        return id;
     }
 
     public void setId(int id) {
-        Id = id;
+        this.id = id;
     }
 
+    @Basic
+    @Column(name = "insurance_type_id")
     public int getInsuranceTypeId() {
         return insuranceTypeId;
     }
@@ -44,6 +50,8 @@ public class Offer {
         this.insuranceTypeId = insuranceType;
     }
 
+    @Basic
+    @Column(name = "description")
     public String getDescription() {
         return description;
     }
@@ -52,14 +60,18 @@ public class Offer {
         this.description = description;
     }
 
+    @Basic
+    @Column(name = "term")
     public int getTerm() {
         return term;
     }
 
-    public void setTerm(int term) {
+    public void setTerm(Integer term) {
         this.term = term;
     }
 
+    @Basic
+    @Column(name = "cost")
     public BigDecimal getCost() {
         return cost;
     }
@@ -68,6 +80,8 @@ public class Offer {
         this.cost = cost;
     }
 
+    @Basic
+    @Column(name = "insurer_id")
     public int getInsurerId() {
         return insurerId;
     }
@@ -76,18 +90,20 @@ public class Offer {
         this.insurerId = insurerId;
     }
 
-    public boolean isVisible() {
+    @Basic
+    @Column(name = "visible")
+    public Boolean getVisible() {
         return visible;
     }
 
-    public void setVisible(boolean visible) {
+    public void setVisible(Boolean visible) {
         this.visible = visible;
     }
 
     @Override
     public String toString() {
         return "Offers{" +
-                "Id=" + Id +
+                "Id=" + id +
                 ", insuranceType=" + insuranceTypeId +
                 ", description='" + description + '\'' +
                 ", term=" + term +
@@ -101,11 +117,11 @@ public class Offer {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Offer offers = (Offer) o;
-        return Id == offers.Id && insuranceTypeId == offers.insuranceTypeId && insurerId == offers.insurerId && Objects.equals(description, offers.description) && Objects.equals(term, offers.term) && Objects.equals(cost, offers.cost);
+        return id == offers.id && insuranceTypeId == offers.insuranceTypeId && insurerId == offers.insurerId && Objects.equals(description, offers.description) && Objects.equals(term, offers.term) && Objects.equals(cost, offers.cost);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(Id, insuranceTypeId, description, term, cost, insurerId);
+        return Objects.hash(id, insuranceTypeId, description, term, cost, insurerId);
     }
 }

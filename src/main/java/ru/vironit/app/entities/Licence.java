@@ -1,8 +1,11 @@
 package ru.vironit.app.entities;
 
+import javax.persistence.*;
 import java.sql.Date;
 import java.util.Objects;
 
+@Entity
+@Table(name = "licences", schema = "public", catalog = "insurance_service")
 public class Licence {
 
     private int id;
@@ -12,8 +15,8 @@ public class Licence {
     private int taxpayerIdentificationNumber;
     private String licenceNumber;
     private Date issueDecisionDate;
-    private int issueDecisionNumber;
-    private boolean confirmation;
+    private Integer issueDecisionNumber;
+    private Boolean confirmation;
 
     public Licence() {
     }
@@ -31,14 +34,18 @@ public class Licence {
         this.confirmation = confirmation;
     }
 
+    @Id
+    @Column(name = "id")
     public int getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
+    @Basic
+    @Column(name = "insurer_id")
     public int getInsurerId() {
         return insurerId;
     }
@@ -47,6 +54,8 @@ public class Licence {
         this.insurerId = insurerId;
     }
 
+    @Basic
+    @Column(name = "insurer_name")
     public String getInsurerName() {
         return insurerName;
     }
@@ -55,6 +64,8 @@ public class Licence {
         this.insurerName = insurerName;
     }
 
+    @Basic
+    @Column(name = "address")
     public String getAddress() {
         return address;
     }
@@ -63,14 +74,18 @@ public class Licence {
         this.address = address;
     }
 
+    @Basic
+    @Column(name = "taxpayer_identification_number")
     public int getTaxpayerIdentificationNumber() {
         return taxpayerIdentificationNumber;
     }
 
-    public void setTaxpayerIdentificationNumber(int taxpayerIdentificationNumber) {
+    public void setTaxpayerIdentificationNumber(Integer taxpayerIdentificationNumber) {
         this.taxpayerIdentificationNumber = taxpayerIdentificationNumber;
     }
 
+    @Basic
+    @Column(name = "licence_number")
     public String getLicenceNumber() {
         return licenceNumber;
     }
@@ -79,6 +94,8 @@ public class Licence {
         this.licenceNumber = licenceNumber;
     }
 
+    @Basic
+    @Column(name = "issue_decision_date")
     public Date getIssueDecisionDate() {
         return issueDecisionDate;
     }
@@ -87,7 +104,9 @@ public class Licence {
         this.issueDecisionDate = issueDecisionDate;
     }
 
-    public int getIssueDecisionNumber() {
+    @Basic
+    @Column(name = "issue_decision_number")
+    public Integer getIssueDecisionNumber() {
         return issueDecisionNumber;
     }
 
@@ -95,11 +114,13 @@ public class Licence {
         this.issueDecisionNumber = issueDecisionNumber;
     }
 
-    public boolean isConfirmation() {
+    @Basic
+    @Column(name = "confirmation")
+    public Boolean getConfirmation() {
         return confirmation;
     }
 
-    public void setConfirmation(boolean confirmation) {
+    public void setConfirmation(Boolean confirmation) {
         this.confirmation = confirmation;
     }
 

@@ -35,4 +35,9 @@ public class LicenceService implements LicenceInterface {
     public void deleteLicence(int id) throws  SQLException {
         implementation.deleteLicence(id);
     }
+
+    @Override
+    public Licence checkLicence(int insurerId) {
+        return implementation.checkLicence(insurerId);
+    }
 }

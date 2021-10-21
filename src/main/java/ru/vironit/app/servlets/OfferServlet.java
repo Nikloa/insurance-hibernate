@@ -46,7 +46,7 @@ public class OfferServlet extends HttpServlet {
                     LocalDate term = LocalDate.now();
                     term.plusDays(offer.getTerm());
                     Date date = Date.valueOf(term);
-                    contract.setDate(date);
+                    contract.setContractDate(date);
                     contract.setInsurerConfirmContractStatus(false);
                     contract.setClientConfirmPaymentStatus(false);
                     contract.setClientIncidentStatus(false);

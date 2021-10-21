@@ -1,26 +1,56 @@
 package ru.vironit.app.entities;
 
+import javax.persistence.*;
+import java.beans.Transient;
 import java.sql.Date;
 import java.util.Objects;
 
+@Entity
+@Table(name = "contracts", schema = "public", catalog = "insurance_service")
 public class Contract {
 
+    @Id
+    @Column(name = "id")
     private int id;
-    private  int offerId;
+
+    @Basic
+    @Column(name = "offer_id")
+    private int offerId;
+
+    @Basic
+    @Column(name = "client_id")
     private int clientId;
-    private Date date;
-    private boolean insurerConfirmContractStatus;
-    private boolean insurerConfirmPaymentStatus;
-    private boolean clientIncidentStatus;
-    private boolean insurerConfirmIncidentStatus;
-    private boolean clientConfirmPaymentStatus;
+
+    @Basic
+    @Column(name = "insurer_confirm_contract_status")
+    private Boolean insurerConfirmContractStatus;
+
+    @Basic
+    @Column(name = "client_confirm_payment_status")
+    private Boolean insurerConfirmPaymentStatus;
+
+    @Basic
+    @Column(name = "contract_date")
+    private Date contractDate;
+
+    @Basic
+    @Column(name = "client_incident_status")
+    private Boolean clientIncidentStatus;
+
+    @Basic
+    @Column(name = "insurer_confirm_incident_status")
+    private Boolean insurerConfirmIncidentStatus;
+
+    @Basic
+    @Column(name = "insurer_confirm_payment_status")
+    private Boolean clientConfirmPaymentStatus;
 
     public Contract() {
     }
 
     public Contract(int id, Date date, boolean insurerConfirmContractStatus, boolean insurerConfirmPaymentStatus, boolean clientIncidentStatus, boolean insurerConfirmIncidentStatus, boolean clientConfirmPaymentStatus, int clientId, int offerId ) {
         this.id = id;
-        this.date = date;
+        this.contractDate = date;
         this.insurerConfirmContractStatus = insurerConfirmContractStatus;
         this.insurerConfirmPaymentStatus = insurerConfirmPaymentStatus;
         this.clientIncidentStatus = clientIncidentStatus;
@@ -31,11 +61,11 @@ public class Contract {
 
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -47,6 +77,7 @@ public class Contract {
         this.offerId = offerId;
     }
 
+
     public int getClientId() {
         return clientId;
     }
@@ -55,15 +86,17 @@ public class Contract {
         this.clientId = clientId;
     }
 
-    public Date getDate() {
-        return date;
+
+    public Date getContractDate() {
+        return contractDate;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setContractDate(Date contractDate) {
+        this.contractDate = contractDate;
     }
 
-    public boolean isInsurerConfirmContractStatus() {
+
+    public Boolean getInsurerConfirmContractStatus() {
         return insurerConfirmContractStatus;
     }
 
@@ -71,35 +104,36 @@ public class Contract {
         this.insurerConfirmContractStatus = insurerConfirmContractStatus;
     }
 
-    public boolean isInsurerConfirmPaymentStatus() {
+    public Boolean getInsurerConfirmPaymentStatus() {
         return insurerConfirmPaymentStatus;
     }
 
-    public void setInsurerConfirmPaymentStatus(boolean insurerConfirmPaymentStatus) {
+    public void setInsurerConfirmPaymentStatus(Boolean insurerConfirmPaymentStatus) {
         this.insurerConfirmPaymentStatus = insurerConfirmPaymentStatus;
     }
 
-    public boolean isClientIncidentStatus() {
+    public Boolean getClientIncidentStatus() {
         return clientIncidentStatus;
     }
 
-    public void setClientIncidentStatus(boolean clientIncidentStatus) {
+    public void setClientIncidentStatus(Boolean clientIncidentStatus) {
         this.clientIncidentStatus = clientIncidentStatus;
     }
 
-    public boolean isInsurerConfirmIncidentStatus() {
+
+    public Boolean getInsurerConfirmIncidentStatus() {
         return insurerConfirmIncidentStatus;
     }
 
-    public void setInsurerConfirmIncidentStatus(boolean insurerConfirmIncidentStatus) {
+    public void setInsurerConfirmIncidentStatus(Boolean insurerConfirmIncidentStatus) {
         this.insurerConfirmIncidentStatus = insurerConfirmIncidentStatus;
     }
 
-    public boolean isClientConfirmPaymentStatus() {
+    public Boolean getClientConfirmPaymentStatus() {
         return clientConfirmPaymentStatus;
     }
 
-    public void setClientConfirmPaymentStatus(boolean clientConfirmPaymentStatus) {
+    public void setClientConfirmPaymentStatus(Boolean clientConfirmPaymentStatus) {
         this.clientConfirmPaymentStatus = clientConfirmPaymentStatus;
     }
 
@@ -109,7 +143,7 @@ public class Contract {
                 "id=" + id +
                 ", offerId=" + offerId +
                 ", clientId=" + clientId +
-                ", date=" + date +
+                ", date=" + contractDate +
                 ", insurerConfirmContractStatus=" + insurerConfirmContractStatus +
                 ", insurerConfirmPaymentStatus=" + insurerConfirmPaymentStatus +
                 ", clientIncidentStatus=" + clientIncidentStatus +
@@ -123,11 +157,18 @@ public class Contract {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Contract contract = (Contract) o;
-        return id == contract.id && offerId == contract.offerId && clientId == contract.clientId && insurerConfirmContractStatus == contract.insurerConfirmContractStatus && insurerConfirmPaymentStatus == contract.insurerConfirmPaymentStatus && clientIncidentStatus == contract.clientIncidentStatus && insurerConfirmIncidentStatus == contract.insurerConfirmIncidentStatus && clientConfirmPaymentStatus == contract.clientConfirmPaymentStatus && Objects.equals(date, contract.date);
+        return id == contract.id && offerId == contract.offerId &&
+                clientId == contract.clientId &&
+                insurerConfirmContractStatus == contract.insurerConfirmContractStatus &&
+                insurerConfirmPaymentStatus == contract.insurerConfirmPaymentStatus &&
+                clientIncidentStatus == contract.clientIncidentStatus &&
+                insurerConfirmIncidentStatus == contract.insurerConfirmIncidentStatus &&
+                clientConfirmPaymentStatus == contract.clientConfirmPaymentStatus &&
+                Objects.equals(contractDate, contract.contractDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, offerId, clientId, date, insurerConfirmContractStatus, insurerConfirmPaymentStatus, clientIncidentStatus, insurerConfirmIncidentStatus, clientConfirmPaymentStatus);
+        return Objects.hash(id, offerId, clientId, contractDate, insurerConfirmContractStatus, insurerConfirmPaymentStatus, clientIncidentStatus, insurerConfirmIncidentStatus, clientConfirmPaymentStatus);
     }
 }

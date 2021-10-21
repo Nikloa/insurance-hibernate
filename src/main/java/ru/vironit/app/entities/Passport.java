@@ -1,8 +1,11 @@
 package ru.vironit.app.entities;
 
+import javax.persistence.*;
 import java.sql.Date;
 import java.util.Objects;
 
+@Entity
+@Table(name = "passports", schema = "public", catalog = "insurance_service")
 public class Passport {
 
     private int id;
@@ -14,13 +17,14 @@ public class Passport {
     private String identificationNumber;
     private Date issueDate;
     private String issuingAuthority;
+    private byte[] passportPhoto;
     private boolean confirmation;
 
     public Passport() {
     }
 
     public Passport(int id, int clientId, String firstName, String lastName, Date birthDate, String passportNumber,
-                        String identificationNumber, Date issueDate, String issuingAuthority, boolean confirmation) {
+                        String identificationNumber, Date issueDate, String issuingAuthority, byte[] passportPhoto, boolean confirmation) {
         this.id = id;
         this.clientId = clientId;
         this.firstName = firstName;
@@ -30,87 +34,120 @@ public class Passport {
         this.identificationNumber = identificationNumber;
         this.issueDate = issueDate;
         this.issuingAuthority = issuingAuthority;
+        this.passportPhoto = passportPhoto;
         this.confirmation = confirmation;
     }
 
-    public void setId(int id) {
+
+
+    @Id
+    @Column(name = "id")
+    public int getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public int getId() {
-        return id;
+    @Basic
+    @Column(name = "client_id")
+    public int getClientId() {
+        return clientId;
     }
 
     public void setClientId(int clientId) {
         this.clientId = clientId;
     }
 
-    public int getClientId() {
-        return clientId;
+    @Basic
+    @Column(name = "first_name")
+    public String getFirstName() {
+        return firstName;
     }
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
 
-    public String getFirstName() {
-        return firstName;
+    @Basic
+    @Column(name = "last_name")
+    public String getLastName() {
+        return lastName;
     }
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
 
-    public String getLastName() {
-        return lastName;
+    @Basic
+    @Column(name = "birth_date")
+    public Date getBirthDate() {
+        return birthDate;
     }
 
     public void setBirthDate(Date birthDate) {
         this.birthDate = birthDate;
     }
 
-    public Date getBirthDate() {
-        return birthDate;
+    @Basic
+    @Column(name = "passport_number")
+    public String  getPassportNumber() {
+        return passportNumber;
     }
 
     public void setPassportNumber(String passportNumber) {
         this.passportNumber = passportNumber;
     }
 
-    public String  getPassportNumber() {
-        return passportNumber;
+    @Basic
+    @Column(name = "identification_number")
+    public String getIdentificationNumber() {
+        return identificationNumber;
     }
 
     public void setIdentificationNumber(String identificationNumber) {
         this.identificationNumber = identificationNumber;
     }
 
-    public String getIdentificationNumber() {
-        return identificationNumber;
+    @Basic
+    @Column(name = "issue_date")
+    public Date getIssueDate() {
+        return issueDate;
     }
 
     public void setIssueDate(Date issueDate) {
         this.issueDate = issueDate;
     }
 
-    public Date getIssueDate() {
-        return issueDate;
+    @Basic
+    @Column(name = "issuing_authority")
+    public String getIssuingAuthority() {
+        return issuingAuthority;
     }
 
     public void setIssuingAuthority(String issuingAuthority) {
         this.issuingAuthority = issuingAuthority;
     }
 
-    public String getIssuingAuthority() {
-        return issuingAuthority;
+    @Basic
+    @Column(name = "passport_photo")
+    public byte[] getPassportPhoto() {
+        return passportPhoto;
     }
 
-    public void setConfirmation(boolean confirmation) {
-        this.confirmation = confirmation;
+    public void setPassportPhoto(byte[] passportPhoto) {
+        this.passportPhoto = passportPhoto;
     }
 
-    public boolean isConfirmation() {
+    @Basic
+    @Column(name = "confirmation")
+    public Boolean getConfirmation() {
         return confirmation;
+    }
+
+    public void setConfirmation(Boolean confirmation) {
+        this.confirmation = confirmation;
     }
 
     @Override

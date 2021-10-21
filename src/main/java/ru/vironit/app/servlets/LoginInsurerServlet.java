@@ -25,9 +25,10 @@ public class LoginInsurerServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         InsurerService insurerService = new InsurerService();
         String email = request.getParameter("email");
+        String password = request.getParameter("password");
         try {
-            if(insurerService.loginInsurer(email, request.getParameter("password"))) {
-                ServletUtils.storeUserCookie(response, email, "INSURER");
+            if(insurerService.loginInsurer(email, password) != null) {
+                ServletUtils.storeUserCookie(response, email, password, "INSURER");
                 response.sendRedirect(request.getParameter("button"));
             } else {
                 doGet(request, response);

@@ -65,11 +65,12 @@ public class CookieFilter implements Filter {
         // Флаг(flag) для проверки Cookie.
         String checked = (String) session.getAttribute("COOKIE_CHECKED");
         String email = ServletUtils.getUserEmailInCookie(req);
+        String password = ServletUtils.getUserPasswordInCookie(req);
         String role = ServletUtils.getUserRoleInCookie(req);
         System.out.println(checked + conn + email + role);
-        if (checked == null && conn != null && email != null && role != null) {
+        if (checked == null && conn != null && email != null && password != null && role != null) {
             System.out.println("GO TO STORED");
-            ServletUtils.storeLoggedUser(session, email, role);
+            ServletUtils.storeLoggedUser(session, email, password, role);
             // Отметить проверенные Cookie.
             session.setAttribute("COOKIE_CHECKED", "CHECKED");
             System.out.println("CHECKED FILTER");

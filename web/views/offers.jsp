@@ -79,7 +79,7 @@
                                 "    <tr>\n" +
                                 "       <td class=\"td\">Cost: " + offer.getCost() + "$</td>" +
                                 "       <td class=\"td\">Term: " + offer.getTerm() + " days</td>" +
-                                "       <td class=\"td\">" + insurer.getCompanyName() + "</td>" +
+                                "       <td class=\"td\">" + insurer.getShortCompanyName() + "</td>" +
                                 "       <td class=\"td\">" +
                                 "           <form method=\"post\">\n" +
                                 "               <button type=\"submit\" name=\"view\" value=\"" + offer.getId() + "\">View</button>\n" +

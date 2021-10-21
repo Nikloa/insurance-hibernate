@@ -1,7 +1,10 @@
 package ru.vironit.app.entities;
 
+import javax.persistence.*;
 import java.util.Objects;
 
+@Entity
+@Table(name = "insurance_type", schema = "public", catalog = "insurance_service")
 public class InsuranceType {
 
     private int id;
@@ -16,6 +19,8 @@ public class InsuranceType {
         this.insuranceType = insuranceType;
     }
 
+    @Id
+    @Column(name = "id")
     public int getId() {
         return id;
     }
@@ -24,6 +29,8 @@ public class InsuranceType {
         this.id = id;
     }
 
+    @Basic
+    @Column(name = "insurance_type")
     public String getInsuranceType() {
         return insuranceType;
     }

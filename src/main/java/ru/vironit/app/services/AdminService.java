@@ -37,7 +37,12 @@ public class AdminService implements AdminInterface {
     }
 
     @Override
-    public Admin checkAdmin(String email) throws SQLException {
+    public boolean checkAdmin(String email) throws SQLException {
         return implementation.checkAdmin(email);
+    }
+
+    @Override
+    public Admin loginAdmin(String email, String password) throws SQLException {
+        return implementation.loginAdmin(email, password);
     }
 }

@@ -8,10 +8,10 @@ public interface InsurerInterface {
 
     void addInsurer(Insurer insurer) throws SQLException;
     Insurer extractInsurer(int id) throws SQLException;
-    void updateInsurer(Insurer newInsurer, int id) throws SQLException;
+    void updateInsurer(Insurer newInsurer) throws SQLException;
     void deleteInsurer(int id) throws SQLException;
-    Insurer checkInsurer(String email) throws SQLException;
-    boolean loginInsurer(String email, String password) throws SQLException;
+    boolean checkInsurer(String email) throws SQLException;
+    Insurer loginInsurer(String email, String password) throws SQLException;
     int parsePhone(String phone);
 
 }

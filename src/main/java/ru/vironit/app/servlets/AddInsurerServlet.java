@@ -25,18 +25,17 @@ public class AddInsurerServlet extends HttpServlet {
         InsurerService insurerService = new InsurerService();
         String email = request.getParameter("email");
 
-
         try {
-            if(insurerService.checkInsurer(email) == null) {
+            if(insurerService.checkInsurer(email)) {
                 Insurer insurer = new Insurer();
                 insurer.setNickname(request.getParameter("nickname"));
                 insurer.setEmail(email);
                 insurer.setPassword(request.getParameter("password"));
-                insurer.setPhone(insurerService.parsePhone(request.getParameter("phone")));
-                insurer.setCompanyName(request.getParameter("companyName"));
+                insurer.setInformationPhone(insurerService.parsePhone(request.getParameter("phone")));
+                insurer.setShortCompanyName(request.getParameter("companyName"));
                 insurerService.addInsurer(insurer);
                 System.out.println(insurer.toString());
-                ServletUtils.storeUserCookie(response, request.getParameter("email"), "INSURER");
+                ServletUtils.storeUserCookie(response, request.getParameter("email"), request.getParameter("password"), "INSURER");
                 response.sendRedirect("history.back()");
             } else {
                 request.setAttribute("error", email);

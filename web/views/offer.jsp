@@ -76,7 +76,7 @@
                         "<h4>" + offer.getDescription() + "</h4>" +
                         "<h4>Cost: " + offer.getCost() + "$</h4>" +
                         "<h4>Term: " + offer.getTerm() + " days</h4>" +
-                        "<h4>Company: " + insurer.getCompanyName() + "</h4>" +
+                        "<h4>Company: " + insurer.getShortCompanyName() + "</h4>" +
                         "<h4>Rating: " + insurer.getRating() + "</h4>" +
                         "</div>");
             %>

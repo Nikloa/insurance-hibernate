@@ -1,58 +1,108 @@
 package ru.vironit.app.entities;
 
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Objects;
 
+@Entity
+@Table(name = "clients", schema = "public", catalog = "insurance_service")
 public class Client extends User{
-    private int phone;
+    private Integer phone;
+    private byte[] photo;
     private BigDecimal balance = new BigDecimal(0);
     private Double rating = 0.0;
 
     public Client() {
 
     }
-/*
-    public Client(int id, String nickname, String email, String password, int phone, BigDecimal balance, Double rating) {
-        this.setId(id);
-        this.setNickname(nickname);
-        this.setEmail(email);
-        this.setPassword(password);
-        this.phone = phone;
-        this.balance = balance;
-        this.rating = rating;
-    }
-*/
 
-    public Client(int id, String nickname, String email, String password, int phone, BigDecimal balance, Double rating) {
+    public Client(int id, String nickname, String email, String password, Integer phone, byte[] photo, BigDecimal balance, Double rating) {
         super(id, nickname, email, password);
         super.setRole(Role.CLIENT);
         this.phone = phone;
         this.balance = balance;
         this.rating = rating;
+        this.photo = photo;
     }
 
-    public void setPhone(int phone) {
+    @Id
+    @Column(name = "id")
+    public Integer getId() {
+        return super.getId();
+    }
+
+    public void setId(Integer id) {
+        super.setId(id);
+    }
+
+    @Basic
+    @Column(name = "nickname")
+    public String getNickname() {
+        return super.getNickname();
+    }
+
+    public void setNickname(String nickname) {
+        super.setNickname(nickname);
+    }
+
+    @Basic
+    @Column(name = "email")
+    public String getEmail() {
+        return super.getEmail();
+    }
+
+    public void setEmail(String email) {
+        super.setEmail(email);
+    }
+
+    @Basic
+    @Column(name = "password")
+    public String getPassword() {
+        return super.getPassword();
+    }
+
+    public void setPassword(String password) {
+        super.setPassword(password);
+    }
+
+    @Basic
+    @Column(name = "phone")
+    public Integer getPhone() {
+        return phone;
+    }
+
+    public void setPhone(Integer phone) {
         this.phone = phone;
     }
 
-    public int getPhone() {
-        return phone;
+    @Basic
+    @Column(name = "photo")
+    public byte[] getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(byte[] photo) {
+        this.photo = photo;
+    }
+
+    @Basic
+    @Column(name = "balance")
+    public BigDecimal getBalance() {
+        return balance;
     }
 
     public void setBalance(BigDecimal balance) {
         this.balance = balance;
     }
 
-    public BigDecimal getBalance() {
-        return balance;
-    }
-
-    public void setRating(double rating) {
-        this.rating = rating;
-    }
-
+    @Basic
+    @Column(name = "rating")
     public double getRating() {
         return rating;
+    }
+
+    public void setRating(Double rating) {
+        this.rating = rating;
     }
 
     @Override

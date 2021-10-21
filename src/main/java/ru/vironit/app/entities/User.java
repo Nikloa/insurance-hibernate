@@ -2,7 +2,7 @@ package ru.vironit.app.entities;
 
 import java.util.Objects;
 
-public class User {
+public abstract class User {
     private int id;
     private String nickname;
     private String email;
@@ -23,12 +23,16 @@ public class User {
         this.id = id;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
     public void setNickname(String nickname) {
         this.nickname = nickname;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getNickname() {

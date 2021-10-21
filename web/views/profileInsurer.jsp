@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="ru.vironit.app.dao.filter.ServletUtils" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="ru.vironit.app.entities.*" %>
@@ -64,19 +65,19 @@
         Licence licence = new LicenceService().extractLicence(insurer.getId());
         ArrayList<Offer> offers = new OfferService().listInsurerOffer(insurer.getId());
         %>
-        <h1 align="center"><%out.println(insurer.getCompanyName());%></h1>
+        <h1 align="center"><%out.println(insurer.getShortCompanyName());%></h1>
         <div class="w3-row-padding">
             <div class="w3-third">
                 <img src="https://icon-library.com/images/no-photo-available-icon/no-photo-available-icon-20.jpg" />
                 <p>Email: <%out.println(insurer.getEmail());%></p>
                 <p>Your rating: <%out.println(insurer.getRating());%></p>
                 <p><button onclick="document.getElementById('id01').style.display='block'" class="w3-button w3-green w3-large">Create Offer</button></p>
-                <p><form><button type="submit" name="changeProfile" value="ty">Change Profile</button></form></p>
-                <p><button>Licence Data</button></p>
+                <p><button onclick="document.getElementById('id02').style.display='block'" class="w3-button w3-green w3-large">Change Profile</button></p>
+                <p><button onclick="document.getElementById('id03').style.display='block'" class="w3-button w3-green w3-large">Licence Data</button></p>
                 <p>
                     <%
                     if(licence != null) {
-                        if(licence.isConfirmation()) {
+                        if(licence.getConfirmation()) {
                             out.println("Licence data checked!");
                         } else {
                             out.println("Licence data don't checked");
@@ -156,6 +157,71 @@
                     </div>
                     <div class="puc">
                         <button class="w3-button w3-block w3-green w3-section w3-padding" type="submit" name="offerButton" value="true">Add</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div id="id02" class="w3-modal">
+        <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width:600px">
+
+            <div class="w3-center"><br>
+                <span onclick="document.getElementById('id02').style.display='none'" class="w3-button w3-xlarge w3-transparent w3-display-topright" title="Close Modal">×</span>
+            </div>
+
+            <form class="w3-container" method="post" name="form">
+                <div class="w3-section">
+                    <label><b>Nickname</b></label>
+                    <input type="text" class="w3-input w3-border w3-margin-bottom" placeholder="Enter Nickname" name="nickname" value="${insurer.getNickname()}" required>
+                    <label><b>Email</b></label>
+                    <input type="email" class="w3-input w3-border w3-margin-bottom" placeholder="Enter Email" name="email" value="${insurer.getEmail()}" required>
+                    <label><b>Password</b></label>
+                    <input type="password" class="w3-input w3-border w3-margin-bottom" placeholder="Enter Password" name="password" value="${insurer.getPassword()}" required>
+                    <label><b>Short Company Name</b></label>
+                    <input type="text" class="w3-input w3-border w3-margin-bottom" placeholder="Enter Company Name" name="companyName" value="${insurer.getShortCompanyName()}" required>
+                    <label><b>Information Phone</b></label>
+                    <input type="text" class="w3-input w3-border w3-margin-bottom mask" placeholder="+375(12) 345-67-89" name="informationPhone" value="${insurer.getInformationPhone()}" required>
+                    <label><b>Logo</b></label>
+                    <input type="file" accept=".jpg, .jpeg" class="w3-input w3-border w3-margin-bottom" placeholder="Choose File" name="file">
+                    <div class="puc">
+                        <button class="w3-button w3-block w3-green w3-section w3-padding" type="submit" name="profileButton" value="true">Add</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script src="https://unpkg.com/imask"></script>
+    <script>
+        var elements = document.getElementsByClassName('mask');
+        for (var i = 0; i < elements.length; i++) {
+            new IMask(elements[i], {
+                mask: '+{375} (00) 000-00-00',
+            });
+        }
+    </script>
+    <div id="id03" class="w3-modal">
+        <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width:600px">
+
+            <div class="w3-center"><br>
+                <span onclick="document.getElementById('id03').style.display='none'" class="w3-button w3-xlarge w3-transparent w3-display-topright" title="Close Modal">×</span>
+            </div>
+
+            <form class="w3-container" method="post" name="form">
+                <div class="w3-section">
+                    <label><b>Full Company Name</b></label>
+                    <input type="text" class="w3-input w3-border w3-margin-bottom" placeholder="Enter Company Name" name="insurerName" value="${licence.getInsurerName()}" required>
+                    <label><b>Address</b></label>
+                    <input type="text" class="w3-input w3-border w3-margin-bottom" placeholder="Enter Address" name="address" value="${licence.getAddress()}" required>
+                    <label><b>Taxpayer Identification Number</b></label>
+                    <input type="number" class="w3-input w3-border w3-margin-bottom" placeholder="Enter Taxpayer Identification Number" name="taxpayerNumber" value="${licence.getTaxpayerIdentificationNumber()}" required>
+                    <label><b>Licence Number</b></label>
+                    <input type="text" class="w3-input w3-border w3-margin-bottom" placeholder="Enter Licence Number" name="licenceNumber" value="${licence.getLicenceNumber()}" required>
+                    <label><b>Issue Decision Date</b></label>
+                    <input type="date" class="w3-input w3-border w3-margin-bottom" placeholder="Enter Issue Decision Date" name="decisionDate" value="${licence.getIssueDecisionDate()}" required>
+                    <label><b>Issue Decision Number</b></label>
+                    <input type="number" class="w3-input w3-border w3-margin-bottom" placeholder="Enter Issue Decision Number" name="decisionNumber" value="${licence.getIssueDecisionNumber()}" required>
+                    <div class="puc">
+                        <button class="w3-button w3-block w3-green w3-section w3-padding" type="submit" name="licenceButton" value="true">Add</button>
                     </div>
                 </div>
             </form>

@@ -29,7 +29,7 @@ public class AddClientServlet extends HttpServlet {
         String email = request.getParameter("email");
 
         try {
-            if(clientService.checkClient(email) == null) {
+            if(clientService.checkClient(email)) {
                 Client client = new Client();
                 client.setNickname(request.getParameter("nickname"));
                 client.setRole(Role.CLIENT);
@@ -39,7 +39,7 @@ public class AddClientServlet extends HttpServlet {
                 int phoneNumber = clientService.parsePhone(phone);
                 client.setPhone(phoneNumber);
                 clientService.addClient(client);
-                ServletUtils.storeUserCookie(response, request.getParameter("email"), "CLIENT");
+                ServletUtils.storeUserCookie(response, request.getParameter("email"), request.getParameter("password"), "CLIENT");
                 response.sendRedirect("history.back()");
             } else {
                 request.setAttribute("error", email);

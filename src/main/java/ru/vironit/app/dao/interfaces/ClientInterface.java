@@ -10,8 +10,8 @@ public interface ClientInterface {
     Client extractClient(int id) throws SQLException;
     void updateClient(Client newClient, int oldId) throws SQLException;
     void deleteClient(int id) throws SQLException;
-    Client checkClient(String email) throws SQLException;
-    boolean loginClient(String email, String password) throws SQLException;
+    boolean checkClient(String email) throws SQLException;
+    Client loginClient(String email, String password) throws SQLException;
     int parsePhone(String phone);
 
 }

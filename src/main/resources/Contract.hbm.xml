@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="ru.vironit.app.entities.Contract" table="contracts" schema="public" catalog="insurance_service">
+        <id name="id" column="id"><generator class="increment"/></id>
+        <property name="contractDate" column="contract_date"/>
+        <property name="insurerConfirmContractStatus" column="insurer_confirm_contract_status"/>
+        <property name="insurerConfirmPaymentStatus" column="insurer_confirm_payment_status"/>
+        <property name="clientIncidentStatus" column="client_incident_status"/>
+        <property name="insurerConfirmIncidentStatus" column="insurer_confirm_incident_status"/>
+        <property name="clientConfirmPaymentStatus" column="client_confirm_payment_status"/>
+        <property name="clientId" column="client_id"/>
+        <property name="offerId" column="offer_id"/>
+    </class>
+</hibernate-mapping>

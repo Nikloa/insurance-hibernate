@@ -37,12 +37,12 @@ public class ClientService implements ClientInterface {
     }
 
     @Override
-    public Client checkClient(String email) throws SQLException {
+    public boolean checkClient(String email) throws SQLException {
         return implementation.checkClient(email);
     }
 
     @Override
-    public boolean loginClient(String email, String password) throws SQLException {
+    public Client loginClient(String email, String password) throws SQLException {
         return implementation.loginClient(email, password);
     }
 

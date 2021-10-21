@@ -77,7 +77,7 @@
                 <p>
                     <%
                     if(passport != null) {
-                        if(passport.isConfirmation()) {
+                        if(passport.getConfirmation()) {
                             out.println("Passport data checked!");
                         } else {
                             out.println("Passport data don't checked");

@@ -28,12 +28,11 @@ public class LoginClientServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            if(new ClientService().loginClient(request.getParameter("email"), request.getParameter("password"))) {
-                ServletUtils.storeUserCookie(response, request.getParameter("email"), "CLIENT");
-                System.out.println("LoginClientServlet parameter button " + request.getParameter("button"));
-                //response.sendRedirect(request.getHeader("referer"));
+            Client client = new ClientService().loginClient(request.getParameter("email"), request.getParameter("password"));
+            if(client != null) {
+
+                ServletUtils.storeUserCookie(response, request.getParameter("email"), request.getParameter("password"), "CLIENT");
                 response.sendRedirect(request.getParameter("button"));
-                //response.sendRedirect((String) request.getAttribute("javax.servlet.forward.request_uri"));
             } else {
                 doGet(request, response);
             }

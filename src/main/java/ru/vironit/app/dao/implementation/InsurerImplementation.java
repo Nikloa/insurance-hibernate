@@ -1,9 +1,19 @@
 package ru.vironit.app.dao.implementation;
 
+import org.hibernate.Hibernate;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.query.Query;
 import ru.vironit.app.dao.interfaces.ConnectionPool;
 import ru.vironit.app.dao.interfaces.InsurerInterface;
 import ru.vironit.app.dao.utils.DatabasePool;
+import ru.vironit.app.dao.utils.HibernateUtil;
+import ru.vironit.app.entities.Client;
+import ru.vironit.app.entities.InsuranceType;
 import ru.vironit.app.entities.Insurer;
+import ru.vironit.app.entities.Role;
 
 import java.sql.*;
 
@@ -11,97 +21,73 @@ public class InsurerImplementation implements InsurerInterface {
 
     @Override
     public void addInsurer(Insurer insurer) throws SQLException {
-        Connection connection = DatabasePool.getConnectionPool().getConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement("insert into insurers (nickname, email, password, short_company_name, information_phone, rating) values (?, ?, ?, ?, ?, ?)");
-        preparedStatement.setString(1, insurer.getNickname());
-        preparedStatement.setString(2, insurer.getEmail());
-        preparedStatement.setString(3, insurer.getPassword());
-        preparedStatement.setString(4, insurer.getCompanyName());
-        preparedStatement.setInt(5, insurer.getPhone());
-        preparedStatement.setDouble(6, insurer.getRating());
-        preparedStatement.executeUpdate();
-        preparedStatement.close();
-        DatabasePool.getConnectionPool().releaseConnection(connection);
-
-        /*
-        DatabasePool.getConnectionPool().getConnection().createStatement().executeUpdate("insert into insurers (nickname, email, password, short_company_name, information_phone, raiting)" +
-                "values ('" + client.getNickname() + "', '" + client.getEmail() + "', '" + client.getPassword() + "', " +
-                client.getCompanyName() + ", " + client.getPhone() + ", " + client.getRating() + ")");
-         */
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        session.save(insurer);
+        transaction.commit();
+        session.close();
     }
 
     @Override
     public Insurer extractInsurer(int id) throws SQLException {
-        ConnectionPool pool = DatabasePool.getConnectionPool();
-        Connection connection = pool.getConnection();
-        ResultSet resultSet = connection.createStatement().executeQuery("select * from insurers where id = " + id);
-        if(resultSet.next()) {
-            Insurer insurer = new Insurer(resultSet.getInt(1),
-                    resultSet.getString(2),
-                    resultSet.getString(3),
-                    resultSet.getString(4),
-                    resultSet.getString(5),
-                    resultSet.getInt(6),
-                    resultSet.getDouble(8));
-            pool.releaseConnection(connection);
-            return insurer;
-        }
-        pool.releaseConnection(connection);
-        return null;
+        //SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        Insurer insurer = session.get(Insurer.class, id);
+        insurer.setRole(Role.INSURER);
+        transaction.commit();
+        session.close();
+        return insurer;
     }
 
     @Override
-    public void updateInsurer(Insurer insurer, int id) throws SQLException {
-        Connection connection = DatabasePool.getConnectionPool().getConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement("update insurers set nickname = ?, email = ?, password = ?, short_company_name = ?, information_phone = ?, rating = ? where id = ?");
-        preparedStatement.setString(1, insurer.getNickname());
-        preparedStatement.setString(2, insurer.getEmail());
-        preparedStatement.setString(3, insurer.getPassword());
-        preparedStatement.setString(4, insurer.getCompanyName());
-        preparedStatement.setInt(5, insurer.getPhone());
-        preparedStatement.setDouble(6, insurer.getRating());
-        preparedStatement.setInt(7, id);
-        preparedStatement.executeUpdate();
-        preparedStatement.close();
-        DatabasePool.getConnectionPool().releaseConnection(connection);
-        /*
-        DatabasePool.getConnectionPool().getConnection().createStatement().executeUpdate("update insurers set nickname = '" + newInsurer.getNickname() + "', email = '" + newInsurer.getEmail() + "', password = '" +
-                newInsurer.getPassword() + "', short_company_name = " + newInsurer.getCompanyName() + ", information_phone = " + newInsurer.getPhone() + ", raiting = " + newInsurer.getRating() + " where id = " + id);
-         */
+    public void updateInsurer(Insurer insurer) throws SQLException {
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        session.update(insurer);
+        transaction.commit();
+        session.close();
     }
 
     @Override
     public void deleteInsurer(int id) throws SQLException {
-        Connection connection = DatabasePool.getConnectionPool().getConnection();
-        PreparedStatement preparedStatement = connection.prepareStatement("delete from insurers where id = ?");
-        preparedStatement.setInt(1, id);
-        preparedStatement.executeUpdate();
-        preparedStatement.close();
-        DatabasePool.getConnectionPool().releaseConnection(connection);
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        Insurer insurer = session.get(Insurer.class, id);
+        session.delete(insurer);
+        transaction.commit();
+        session.close();
     }
 
     @Override
-    public Insurer checkInsurer(String email) throws SQLException {
-        ResultSet resultSet = DatabasePool.getConnectionPool().getConnection().createStatement().executeQuery("select * from insurers where email like '" + email + "'");
-        if(resultSet.next()) {
-            Insurer insurer = new Insurer(resultSet.getInt(1),
-                    resultSet.getString(2),
-                    resultSet.getString(3),
-                    resultSet.getString(4),
-                    resultSet.getString(5),
-                    resultSet.getInt(6),
-                    resultSet.getDouble(8));
-            return insurer;
+    public boolean checkInsurer(String email) throws SQLException {
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        Session session = sessionFactory.openSession();
+        Query query = session.createQuery("from Insurer where email=:email");
+        query.setParameter("email", email);
+        Insurer insurer = (Insurer) query.uniqueResult();
+        session.close();
+        if(insurer == null) {
+            return true;
+        } else {
+            return false;
         }
-        return null;
     }
 
     @Override
-    public boolean loginInsurer(String email, String password) throws SQLException {
-        Connection connection = DatabasePool.getConnectionPool().getConnection();
-        Statement statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery("select * from insurers where email like '" + email + "' and password like '" + password + "'");
-        return resultSet.next();
+    public Insurer loginInsurer(String email, String password) throws SQLException {
+        SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+        Session session = sessionFactory.openSession();
+        Query query = session.createQuery("from Insurer where email=:email and password=:password");
+        query.setParameter("email", email);
+        query.setParameter("password", password);
+        Insurer insurer = (Insurer) query.uniqueResult();
+        session.close();
+        return insurer;
     }
 
     @Override
