@@ -1,4 +1,6 @@
-<%@ page import="java.util.Enumeration" %><%--
+<%@ taglib prefix="th" uri="http://www.springframework.org/tags/form" %>
+<%@ page import="java.util.Enumeration" %>
+<%--
   Created by IntelliJ IDEA.
   User: User
   Date: 05.10.2021
@@ -18,15 +20,15 @@
 </head>
 <body>
 <div class="bg">
-    <form method="post" class="container">
+    <form method="post" class="container" th:th:action="@{/login}" th:object="${client}">
         <span class="closebtn" onclick="history.back()" title="Back">×</span>
         <h1>Login</h1>
 
         <label>Email:
-            <input type="email" name="email" placeholder="Enter Email"><br />
+            <input type="email" name="email" placeholder="Enter Email" th:field="*{email}"><br />
         </label>
         <label>Password:
-            <input type="password" name="password" placeholder="Enter Password"><br />
+            <input type="password" name="password" placeholder="Enter Password" th:field="*{password}"><br />
         </label>
         <%
             if(!request.getHeader("referer").equals("http://localhost:8080/login")) {

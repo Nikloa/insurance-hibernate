@@ -58,7 +58,6 @@
     </style>
 </head>
 <body>
-
 <div class="bg">
     <%
         if (request.getAttribute("error") != null) {
@@ -77,15 +76,20 @@
             <input type="text" name="nickname" placeholder="Enter Nickname"><br />
         </label>
         <label>Email:
-            <input type="email" name="email" placeholder="Enter Email"><br />
+            <input type="email" name="email" placeholder="Enter Email" required><br />
         </label>
         <label>Password:
-            <input type="password" name="password" placeholder="Enter Password"><br />
+            <input type="password" name="password" placeholder="Enter Password" required><br />
         </label>
         <label>Phone:
             <input type="text" class="mask" name="phone" placeholder="+375 (12) 345-67-89">
         </label>
-        <button type="submit" class="btn">Submit</button>
+        <%
+            if(!request.getHeader("referer").equals("http://localhost:8080/add")) {
+                session.setAttribute("referer", request.getHeader("referer"));
+            }
+        %>
+        <button type="submit" class="btn" name="button" value="${referer}">Submit</button>
         <a href='/addInsurer'>I'm insurer</a>
     </form>
 </div>

@@ -31,9 +31,9 @@
     <meta charset="UTF-8">
     <title>Insurance</title>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <link href="css/index.css" rel="stylesheet" type="text/css" media="screen"/>
+    <link href="../css/index.css" rel="stylesheet" type="text/css" media="screen"/>
     <style>
-        <%@include file="css/index.css"%>
+        <%@include file="../css/index.css"%>
     </style>
 </head>
 <body>
