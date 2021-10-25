@@ -2,13 +2,9 @@ package ru.vironit.app.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import ru.vironit.app.dao.filter.ServletUtils;
-import ru.vironit.app.entities.Client;
-import ru.vironit.app.entities.Insurer;
-import ru.vironit.app.services.ClientService;
 import ru.vironit.app.services.InsurerService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -35,6 +31,8 @@ public class LoginInsurerController {
         String password = request.getParameter("password");
 
         if (insurerService.loginInsurer(email, password) != null) {
+            ServletUtils.deleteLoggedUser(session);
+            ServletUtils.deleteUserCookie(response, session);
             ServletUtils.storeUserCookie(response, email, password, "INSURER");
             return "redirect:" + session.getAttribute("referer");
         }
