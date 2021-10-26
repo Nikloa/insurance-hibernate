@@ -31,7 +31,6 @@ public class InsurerImplementation implements InsurerInterface {
 
     @Override
     public Insurer extractInsurer(int id) throws SQLException {
-        //SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();

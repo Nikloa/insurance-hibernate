@@ -18,7 +18,6 @@ public class ClientImplementation implements ClientInterface {
 
     @Override
     public void addClient(Client client) throws SQLException {
-        //sessionFactory = new Configuration().configure().buildSessionFactory();
         SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
         Session session = sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
